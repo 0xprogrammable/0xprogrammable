@@ -1,0 +1,34 @@
+{
+  "hero": {
+    "source": "assets/profile/source/programmable-profile-ecosystem-source.png",
+    "gif": "assets/profile/programmable-profile-ecosystem.gif",
+    "still": "assets/profile/programmable-profile-ecosystem.jpg",
+    "dimensions": [
+      1400,
+      635
+    ],
+    "frames": 28,
+    "frameDurationMs": 190,
+    "motion": [
+      "Independent stepped light moving from one idea into three model branches",
+      "Three separately phased pool ripple systems",
+      "Independent paper petals and restrained star twinkles",
+      "No camera movement, source deformation, morphing, or embedded text"
+    ]
+  },
+  "builder": {
+    "source": "assets/profile/source/programmable-builder-source.png",
+    "gif": "assets/profile/programmable-builder-skill.gif",
+    "still": "assets/profile/programmable-builder-skill.jpg",
+    "dimensions": [
+      1400,
+      636
+    ],
+    "frames": 28,
+    "frameDurationMs": 190,
+    "motion": [
+      "Independent pollen and paper-petal movement",
+      "No camera movement, scene deformation, or logo morphing"
+    ]
+  }
+}
