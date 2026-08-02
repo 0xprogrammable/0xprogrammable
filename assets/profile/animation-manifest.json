@@ -1,34 +1,37 @@
 {
   "hero": {
     "source": "assets/profile/source/programmable-profile-ecosystem-source.png",
+    "canonicalLogo": "assets/profile/source/programmable-loop-mark.png",
     "gif": "assets/profile/programmable-profile-ecosystem.gif",
     "still": "assets/profile/programmable-profile-ecosystem.jpg",
     "dimensions": [
       1400,
-      635
+      560
     ],
-    "frames": 28,
-    "frameDurationMs": 190,
+    "frames": 12,
+    "frameDurationMs": 340,
     "motion": [
-      "Independent stepped light moving from one idea into three model branches",
-      "Three separately phased pool ripple systems",
-      "Independent paper petals and restrained star twinkles",
-      "No camera movement, source deformation, morphing, or embedded text"
+      "Independent cut-paper petals and sparse pollen move in visible steps",
+      "The paper field, floral painting and canonical Programmable mark stay fixed",
+      "No camera movement, warping, morphing, text or generated logos"
     ]
   },
   "builder": {
     "source": "assets/profile/source/programmable-builder-source.png",
+    "canonicalLogo": "assets/profile/source/programmable-loop-mark.png",
+    "githubLogo": "assets/profile/source/github-mark-official.png",
     "gif": "assets/profile/programmable-builder-skill.gif",
     "still": "assets/profile/programmable-builder-skill.jpg",
     "dimensions": [
       1400,
-      636
+      520
     ],
-    "frames": 28,
-    "frameDurationMs": 190,
+    "frames": 12,
+    "frameDurationMs": 340,
     "motion": [
-      "Independent pollen and paper-petal movement",
-      "No camera movement, scene deformation, or logo morphing"
+      "Independent cut-paper petals and sparse pollen move around the two official marks",
+      "Both marks remain fixed and pixel-identical throughout the loop",
+      "No computer scene, camera movement, warping, morphing or embedded text"
     ]
   }
 }

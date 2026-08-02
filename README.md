@@ -6,7 +6,7 @@
     />
     <img
       src="./assets/profile/programmable-profile-ecosystem.gif"
-      alt="One idea grows into several independent Uniswap v4 launch models"
+      alt="Programmable's pink loop mark framed by a quiet paper-floral garden"
       width="100%"
     />
   </picture>
@@ -75,7 +75,7 @@ A new model can begin with a plain-language idea or an existing public Uniswap v
     />
     <img
       src="./assets/profile/programmable-builder-skill.gif"
-      alt="A public Uniswap v4 project grows from an idea into a reviewable GitHub submission"
+      alt="The Programmable and GitHub marks above a restrained paper-floral garden"
       width="100%"
     />
   </picture>
