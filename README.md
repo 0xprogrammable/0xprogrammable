@@ -2,11 +2,11 @@
   <picture>
     <source
       media="(prefers-reduced-motion: reduce)"
-      srcset="./assets/profile/programmable-profile-ecosystem.jpg"
+      srcset="./assets/profile/programmable-night-garden.jpg"
     />
     <img
-      src="./assets/profile/programmable-profile-ecosystem.gif"
-      alt="Programmable's pink loop mark framed by a quiet paper-floral garden"
+      src="./assets/profile/programmable-night-garden.gif"
+      alt="Programmable's pink loop mark over a night garden with four flowers moving in subtle stop-motion"
       width="100%"
     />
   </picture>
@@ -38,20 +38,6 @@ The complete project stays in the builder's own public repository. A small appli
 exact revision and keeps the public review trail in GitHub.
 
 ## Submit a hook or project
-
-<p align="center">
-  <picture>
-    <source
-      media="(prefers-reduced-motion: reduce)"
-      srcset="./assets/profile/programmable-builder-skill.jpg"
-    />
-    <img
-      src="./assets/profile/programmable-builder-skill.gif"
-      alt="The Programmable and GitHub marks above a restrained paper-floral garden"
-      width="100%"
-    />
-  </picture>
-</p>
 
 Install the Builder with:
 

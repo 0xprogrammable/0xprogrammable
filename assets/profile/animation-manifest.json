@@ -1,37 +1,22 @@
 {
   "hero": {
-    "source": "assets/profile/source/programmable-profile-ecosystem-source.png",
+    "sources": [
+      "assets/profile/source/programmable-night-sky-source.png",
+      "assets/profile/source/programmable-night-botanical-source.png"
+    ],
     "canonicalLogo": "assets/profile/source/programmable-loop-mark.png",
-    "gif": "assets/profile/programmable-profile-ecosystem.gif",
-    "still": "assets/profile/programmable-profile-ecosystem.jpg",
+    "gif": "assets/profile/programmable-night-garden.gif",
+    "still": "assets/profile/programmable-night-garden.jpg",
     "dimensions": [
       1400,
       560
     ],
     "frames": 12,
-    "frameDurationMs": 340,
+    "frameDurationMs": 400,
     "motion": [
-      "Independent cut-paper petals and sparse pollen move in visible steps",
-      "The paper field, floral painting and canonical Programmable mark stay fixed",
-      "No camera movement, warping, morphing, text or generated logos"
-    ]
-  },
-  "builder": {
-    "source": "assets/profile/source/programmable-builder-source.png",
-    "canonicalLogo": "assets/profile/source/programmable-loop-mark.png",
-    "githubLogo": "assets/profile/source/github-mark-official.png",
-    "gif": "assets/profile/programmable-builder-skill.gif",
-    "still": "assets/profile/programmable-builder-skill.jpg",
-    "dimensions": [
-      1400,
-      520
-    ],
-    "frames": 12,
-    "frameDurationMs": 340,
-    "motion": [
-      "Independent cut-paper petals and sparse pollen move around the two official marks",
-      "Both marks remain fixed and pixel-identical throughout the loop",
-      "No computer scene, camera movement, warping, morphing or embedded text"
+      "Four painted flower heads move in small stepped sways",
+      "The camera, night sky, stems and canonical Programmable mark stay fixed",
+      "No warping, morphing, text, generated logos or global color cycling"
     ]
   }
 }
