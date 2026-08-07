@@ -46,27 +46,39 @@ They do not define the edge of what can be invented.
   <a href="https://github.com/0xprogrammable/hookbuilder">
     <img
       src="./assets/profile/programmable-builder-skill.jpg"
-      alt="The Programmable and GitHub marks growing above a hand-painted paper garden"
+      alt="Open Programmable Hookbuilder on GitHub"
       width="100%"
     />
   </a>
 </p>
 
+<p align="center">
+  <a href="https://claude.ai/code/new?q=Install%20and%20use%20the%20Programmable%20Hookbuilder%20skill%20from%20https%3A%2F%2Fgithub.com%2F0xprogrammable%2Fhookbuilder.%20Turn%20my%20idea%20into%20a%20complete%2C%20checked%20Uniswap%20v4%20project%20and%20prepare%20its%20exact%20GitHub%20application.%20Start%20by%20asking%20me%20for%20the%20idea."><img src="./assets/profile/open-in-claude-code-night.png" alt="Open Hookbuilder in Claude Code" width="300" /></a>
+  &nbsp;&nbsp;
+  <a href="#use-with-codex-or-another-coding-agent"><img src="./assets/profile/copy-for-any-agent-night.png" alt="Open the Hookbuilder prompt for Codex or another coding agent" width="300" /></a>
+</p>
+
+<a id="use-with-codex-or-another-coding-agent"></a>
+
+### Use with Codex or another coding agent
+
+Copy this into your agent and send it:
+
+```text
+Install and use the Programmable Hookbuilder skill from:
+https://github.com/0xprogrammable/hookbuilder
+
+Turn my idea into a complete, checked Uniswap v4 project and prepare its exact GitHub application.
+Start by asking me for the idea.
+```
+
 <details>
-  <summary><strong>Give this to your coding agent</strong> — open the 20-second start</summary>
+  <summary><strong>Manual install command</strong></summary>
 
   <br />
 
-  Install the portable Hookbuilder skill:
-
   ```bash
   gh skill install 0xprogrammable/hookbuilder
-  ```
-
-  Then describe the idea in your own words:
-
-  ```text
-  Use the Programmable Hookbuilder skill. Turn this idea into a complete, checked Uniswap v4 project and prepare its exact GitHub application: <your idea>
   ```
 
   [Open Hookbuilder →](https://github.com/0xprogrammable/hookbuilder)
@@ -130,7 +142,7 @@ from a versioned manifest, so integrators do not have to hard-code every future 
   <a href="https://programmable.family/explore">
     <img
       src="./assets/profile/programmable-profile-ecosystem.jpg"
-      alt="Programmable's pink loop mark surrounded by a quiet hand-painted garden"
+      alt="Explore Programmable launches"
       width="100%"
     />
   </a>

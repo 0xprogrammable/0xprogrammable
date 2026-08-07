@@ -8,7 +8,7 @@ import json
 import math
 from pathlib import Path
 
-from PIL import Image, ImageChops, ImageDraw, ImageFilter, ImageOps
+from PIL import Image, ImageChops, ImageDraw, ImageFilter, ImageFont, ImageOps
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -18,13 +18,26 @@ QA_DIR = ROOT / ".artifacts" / "profile"
 
 NIGHT_SKY_SOURCE = SOURCE_DIR / "programmable-night-sky-source.png"
 NIGHT_BOTANICAL_SOURCE = SOURCE_DIR / "programmable-night-botanical-source.png"
+BUILDER_BACKGROUND_SOURCE = SOURCE_DIR / "programmable-builder-night-background-source.png"
+ECOSYSTEM_BACKGROUND_SOURCE = SOURCE_DIR / "programmable-ecosystem-night-background-source.png"
 PROGRAMMABLE_MARK = SOURCE_DIR / "programmable-loop-mark.png"
+GITHUB_MARK = SOURCE_DIR / "github-mark-official.png"
+BUTTON_FONT = SOURCE_DIR / "fonts" / "InstrumentSans-Medium.ttf"
 
 HERO_GIF = ASSET_DIR / "programmable-night-garden.gif"
 HERO_STILL = ASSET_DIR / "programmable-night-garden.jpg"
+BUILDER_STILL = ASSET_DIR / "programmable-builder-skill.jpg"
+ECOSYSTEM_STILL = ASSET_DIR / "programmable-profile-ecosystem.jpg"
+SOCIAL_PREVIEW = ASSET_DIR / "programmable-github-social-preview.jpg"
+CLAUDE_BUTTON = ASSET_DIR / "open-in-claude-code-night.png"
+ANY_AGENT_BUTTON = ASSET_DIR / "copy-for-any-agent-night.png"
 MANIFEST = ASSET_DIR / "animation-manifest.json"
 
 HERO_SIZE = (1400, 560)
+BUILDER_SIZE = (1400, 560)
+ECOSYSTEM_SIZE = (1400, 560)
+SOCIAL_PREVIEW_SIZE = (1280, 640)
+BUTTON_SIZE = (600, 156)
 FRAME_COUNT = 12
 FRAME_DURATION_MS = 400
 
@@ -59,7 +72,24 @@ def load_programmable_mark(height: int) -> Image.Image:
     return resize_to_height(trim_alpha(Image.open(PROGRAMMABLE_MARK)), height)
 
 
-def paste_mark_with_glow(canvas: Image.Image, mark: Image.Image, center: tuple[int, int]) -> None:
+def load_github_mark(height: int) -> Image.Image:
+    """Turn the official black-on-white GitHub source into a white mark with alpha."""
+    source = Image.open(GITHUB_MARK).convert("RGB")
+    alpha = ImageOps.invert(ImageOps.grayscale(source))
+    alpha = alpha.point(lambda value: 0 if value < 4 else min(255, round(value * 1.08)))
+    mark = Image.new("RGBA", source.size, (248, 249, 252, 0))
+    mark.putalpha(alpha)
+    return resize_to_height(trim_alpha(mark), height)
+
+
+def paste_mark_with_glow(
+    canvas: Image.Image,
+    mark: Image.Image,
+    center: tuple[int, int],
+    glow_color: tuple[int, int, int] = (238, 119, 193),
+    glow_strength: float = 0.22,
+    glow_blur: int = 22,
+) -> None:
     """Keep the exact mark fixed while adding a restrained static paper halo."""
     x = round(center[0] - mark.width / 2)
     y = round(center[1] - mark.height / 2)
@@ -67,11 +97,100 @@ def paste_mark_with_glow(canvas: Image.Image, mark: Image.Image, center: tuple[i
     padded_size = (mark.width + padding * 2, mark.height + padding * 2)
     padded_alpha = Image.new("L", padded_size, 0)
     padded_alpha.paste(mark.getchannel("A"), (padding, padding))
-    glow_alpha = padded_alpha.filter(ImageFilter.GaussianBlur(22))
-    glow = Image.new("RGBA", padded_size, (238, 119, 193, 0))
-    glow.putalpha(glow_alpha.point(lambda value: round(value * 0.22)))
+    glow_alpha = padded_alpha.filter(ImageFilter.GaussianBlur(glow_blur))
+    glow = Image.new("RGBA", padded_size, (*glow_color, 0))
+    glow.putalpha(glow_alpha.point(lambda value: round(value * glow_strength)))
     canvas.alpha_composite(glow, (x - padding, y - padding))
     canvas.alpha_composite(mark, (x, y))
+
+
+def save_jpeg(image: Image.Image, path: Path, quality: int = 91) -> None:
+    image.convert("RGB").save(path, quality=quality, optimize=True, progressive=True)
+
+
+def fit_label_font(text: str, max_width: int, initial_size: int = 36) -> ImageFont.FreeTypeFont:
+    size = initial_size
+    while size >= 24:
+        font = ImageFont.truetype(BUTTON_FONT, size)
+        bounds = font.getbbox(text)
+        if bounds[2] - bounds[0] <= max_width:
+            return font
+        size -= 1
+    raise RuntimeError(f"Button label is too long: {text}")
+
+
+def build_action_button(background: Path, label: str, path: Path) -> None:
+    canvas = fit_cover(Image.open(background), BUTTON_SIZE)
+    canvas = Image.alpha_composite(canvas, Image.new("RGBA", BUTTON_SIZE, (2, 5, 20, 58)))
+    draw = ImageDraw.Draw(canvas)
+    draw.rounded_rectangle(
+        (2, 2, BUTTON_SIZE[0] - 3, BUTTON_SIZE[1] - 3),
+        radius=28,
+        outline=(239, 130, 188, 210),
+        width=3,
+    )
+
+    button_mark = load_programmable_mark(54)
+    paste_mark_with_glow(canvas, button_mark, (56, BUTTON_SIZE[1] // 2), glow_strength=0.16, glow_blur=12)
+
+    font = fit_label_font(label, 430)
+    bounds = draw.textbbox((0, 0), label, font=font)
+    text_height = bounds[3] - bounds[1]
+    draw.text((100, round((BUTTON_SIZE[1] - text_height) / 2 - bounds[1])), label, font=font, fill=(249, 250, 255, 255))
+
+    arrow_font = ImageFont.truetype(BUTTON_FONT, 42)
+    arrow = "→"
+    arrow_bounds = draw.textbbox((0, 0), arrow, font=arrow_font)
+    arrow_height = arrow_bounds[3] - arrow_bounds[1]
+    draw.text(
+        (BUTTON_SIZE[0] - 58, round((BUTTON_SIZE[1] - arrow_height) / 2 - arrow_bounds[1])),
+        arrow,
+        font=arrow_font,
+        fill=(239, 130, 188, 255),
+    )
+    canvas.save(path, optimize=True)
+
+
+def build_static_assets() -> None:
+    """Build the two night banners and the repository social-preview card."""
+    builder = fit_cover(Image.open(BUILDER_BACKGROUND_SOURCE), BUILDER_SIZE)
+    programmable = load_programmable_mark(224)
+    github = load_github_mark(208)
+    paste_mark_with_glow(builder, programmable, (578, 244))
+    paste_mark_with_glow(
+        builder,
+        github,
+        (822, 244),
+        glow_color=(236, 241, 255),
+        glow_strength=0.18,
+        glow_blur=20,
+    )
+    save_jpeg(builder, BUILDER_STILL)
+
+    ecosystem = fit_cover(Image.open(ECOSYSTEM_BACKGROUND_SOURCE), ECOSYSTEM_SIZE)
+    ecosystem_mark = load_programmable_mark(205)
+    paste_mark_with_glow(ecosystem, ecosystem_mark, (700, 242), glow_strength=0.20)
+    save_jpeg(ecosystem, ECOSYSTEM_STILL)
+
+    social = fit_cover(Image.open(ECOSYSTEM_BACKGROUND_SOURCE), SOCIAL_PREVIEW_SIZE)
+    social_programmable = load_programmable_mark(270)
+    social_github = load_github_mark(250)
+    paste_mark_with_glow(social, social_programmable, (492, 298), glow_strength=0.24)
+    paste_mark_with_glow(
+        social,
+        social_github,
+        (788, 298),
+        glow_color=(236, 241, 255),
+        glow_strength=0.20,
+        glow_blur=22,
+    )
+    save_jpeg(social, SOCIAL_PREVIEW, quality=89)
+
+    if SOCIAL_PREVIEW.stat().st_size >= 1_000_000:
+        raise RuntimeError("Repository social preview must stay below GitHub's 1 MB limit")
+
+    build_action_button(BUILDER_BACKGROUND_SOURCE, "Open in Claude Code", CLAUDE_BUTTON)
+    build_action_button(ECOSYSTEM_BACKGROUND_SOURCE, "Prompt for Codex + other agents", ANY_AGENT_BUTTON)
 
 
 # Head-only masks let the painted flowers sway while the camera, stems and paper stay fixed.
@@ -212,6 +331,8 @@ def main() -> None:
     ASSET_DIR.mkdir(parents=True, exist_ok=True)
     QA_DIR.mkdir(parents=True, exist_ok=True)
 
+    build_static_assets()
+
     hero_frames, flower_mask_image = build_hero_frames()
     save_gif(hero_frames, HERO_GIF)
     hero_frames[0].save(HERO_STILL, quality=92, optimize=True, progressive=True)
@@ -237,6 +358,41 @@ def main() -> None:
                 "Four painted flower heads move in small stepped sways",
                 "The camera, night sky, stems and canonical Programmable mark stay fixed",
                 "No warping, morphing, text, generated logos or global color cycling",
+            ],
+        },
+        "builder": {
+            "source": str(BUILDER_BACKGROUND_SOURCE.relative_to(ROOT)),
+            "canonicalLogos": [
+                str(PROGRAMMABLE_MARK.relative_to(ROOT)),
+                str(GITHUB_MARK.relative_to(ROOT)),
+            ],
+            "still": str(BUILDER_STILL.relative_to(ROOT)),
+            "dimensions": list(BUILDER_SIZE),
+            "composition": "Optically balanced Programmable and white GitHub marks in a moonlit garden",
+        },
+        "ecosystem": {
+            "source": str(ECOSYSTEM_BACKGROUND_SOURCE.relative_to(ROOT)),
+            "canonicalLogo": str(PROGRAMMABLE_MARK.relative_to(ROOT)),
+            "still": str(ECOSYSTEM_STILL.relative_to(ROOT)),
+            "dimensions": list(ECOSYSTEM_SIZE),
+            "composition": "A quiet night-garden clearing with the Programmable mark",
+        },
+        "socialPreview": {
+            "source": str(ECOSYSTEM_BACKGROUND_SOURCE.relative_to(ROOT)),
+            "canonicalLogos": [
+                str(PROGRAMMABLE_MARK.relative_to(ROOT)),
+                str(GITHUB_MARK.relative_to(ROOT)),
+            ],
+            "still": str(SOCIAL_PREVIEW.relative_to(ROOT)),
+            "dimensions": list(SOCIAL_PREVIEW_SIZE),
+            "maxBytes": 1000000,
+        },
+        "actions": {
+            "font": str(BUTTON_FONT.relative_to(ROOT)),
+            "dimensions": list(BUTTON_SIZE),
+            "buttons": [
+                str(CLAUDE_BUTTON.relative_to(ROOT)),
+                str(ANY_AGENT_BUTTON.relative_to(ROOT)),
             ],
         },
     }

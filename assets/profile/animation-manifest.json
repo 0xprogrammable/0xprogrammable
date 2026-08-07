@@ -18,5 +18,52 @@
       "The camera, night sky, stems and canonical Programmable mark stay fixed",
       "No warping, morphing, text, generated logos or global color cycling"
     ]
+  },
+  "builder": {
+    "source": "assets/profile/source/programmable-builder-night-background-source.png",
+    "canonicalLogos": [
+      "assets/profile/source/programmable-loop-mark.png",
+      "assets/profile/source/github-mark-official.png"
+    ],
+    "still": "assets/profile/programmable-builder-skill.jpg",
+    "dimensions": [
+      1400,
+      560
+    ],
+    "composition": "Optically balanced Programmable and white GitHub marks in a moonlit garden"
+  },
+  "ecosystem": {
+    "source": "assets/profile/source/programmable-ecosystem-night-background-source.png",
+    "canonicalLogo": "assets/profile/source/programmable-loop-mark.png",
+    "still": "assets/profile/programmable-profile-ecosystem.jpg",
+    "dimensions": [
+      1400,
+      560
+    ],
+    "composition": "A quiet night-garden clearing with the Programmable mark"
+  },
+  "socialPreview": {
+    "source": "assets/profile/source/programmable-ecosystem-night-background-source.png",
+    "canonicalLogos": [
+      "assets/profile/source/programmable-loop-mark.png",
+      "assets/profile/source/github-mark-official.png"
+    ],
+    "still": "assets/profile/programmable-github-social-preview.jpg",
+    "dimensions": [
+      1280,
+      640
+    ],
+    "maxBytes": 1000000
+  },
+  "actions": {
+    "font": "assets/profile/source/fonts/InstrumentSans-Medium.ttf",
+    "dimensions": [
+      600,
+      156
+    ],
+    "buttons": [
+      "assets/profile/open-in-claude-code-night.png",
+      "assets/profile/copy-for-any-agent-night.png"
+    ]
   }
 }

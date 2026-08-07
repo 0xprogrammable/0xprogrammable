@@ -10,7 +10,7 @@ const readme = readFileSync(join(root, "README.md"), "utf8");
 const payload = JSON.stringify({
   text: readme,
   mode: "gfm",
-  context: process.env.PROFILE_MARKDOWN_CONTEXT ?? "0xprogrammable/profile",
+  context: process.env.PROFILE_MARKDOWN_CONTEXT ?? "0xprogrammable/0xprogrammable",
 });
 
 const rendered = spawnSync("gh", ["api", "markdown", "--input", "-"], {
@@ -24,6 +24,8 @@ if (rendered.status !== 0) {
   process.exit(rendered.status ?? 1);
 }
 
+const renderedHtml = rendered.stdout.replaceAll('src="./assets/', 'src="/assets/');
+
 const outputDir = join(root, ".artifacts", "profile");
 mkdirSync(outputDir, { recursive: true });
 
@@ -32,7 +34,6 @@ const page = String.raw`<!doctype html>
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <base href="/" />
     <title>Programmable GitHub profile preview</title>
     <link
       rel="stylesheet"
@@ -73,7 +74,7 @@ const page = String.raw`<!doctype html>
   <body>
     <main class="profile-shell">
       <article class="markdown-body" data-color-mode="auto" data-light-theme="light" data-dark-theme="dark">
-        ${rendered.stdout}
+        ${renderedHtml}
       </article>
     </main>
   </body>
