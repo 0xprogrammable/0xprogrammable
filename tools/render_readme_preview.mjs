@@ -10,7 +10,7 @@ const readme = readFileSync(join(root, "README.md"), "utf8");
 const payload = JSON.stringify({
   text: readme,
   mode: "gfm",
-  context: "0xprogrammable/0xprogrammable",
+  context: process.env.PROFILE_MARKDOWN_CONTEXT ?? "0xprogrammable/profile",
 });
 
 const rendered = spawnSync("gh", ["api", "markdown", "--input", "-"], {

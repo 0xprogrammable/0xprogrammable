@@ -1,113 +1,151 @@
 <p align="center">
-  <picture>
-    <source
-      media="(prefers-reduced-motion: reduce)"
-      srcset="./assets/profile/programmable-night-garden.jpg"
-    />
-    <img
-      src="./assets/profile/programmable-night-garden.gif"
-      alt="Programmable's pink loop mark over a night garden with four flowers moving in subtle stop-motion"
-      width="100%"
-    />
-  </picture>
+  <a href="https://programmable.family" aria-label="Open Programmable">
+    <picture>
+      <source
+        media="(prefers-reduced-motion: reduce)"
+        srcset="./assets/profile/programmable-night-garden.jpg"
+      />
+      <img
+        src="./assets/profile/programmable-night-garden.gif"
+        alt="Programmable's pink loop mark rising above a hand-painted night garden"
+        width="100%"
+      />
+    </picture>
+  </a>
 </p>
 
 <h1 align="center">Programmable</h1>
 
+<h3 align="center">Build what liquidity has never done before.</h3>
+
 <p align="center">
-  A launchpad for what Uniswap v4 pools can become.
+  Describe an idea in ordinary language. Hookbuilder helps turn it into an open Uniswap v4 project.<br />
+  Programmable gives supported releases a traceable path to launch and discovery.
 </p>
 
 <p align="center">
-  <a href="https://programmable.family"><strong>Launch&nbsp;a&nbsp;token</strong></a>
+  <a href="https://github.com/0xprogrammable/hookbuilder"><strong>Build with Hookbuilder</strong></a>
   &nbsp;·&nbsp;
-  <a href="https://github.com/0xprogrammable/programmable/blob/main/BUILDER_PROGRAM.md">Submit&nbsp;a&nbsp;hook</a>
+  <a href="https://programmable.family/explore">Explore launches</a>
   &nbsp;·&nbsp;
-  <a href="https://github.com/0xprogrammable/programmable/tree/main/submissions">Browse&nbsp;reviews</a>
+  <a href="https://developers.programmable.family">Integrate Programmable</a>
 </p>
 
-## The token is only the beginning
+<br />
 
-A token describes what is being traded. A hook shapes what happens when it moves.
+## Start with a sentence, not a specification
 
-With Uniswap v4, a pool can react when someone trades or moves liquidity. It can change fees, remember earlier activity, decide where revenue goes or refuse an action entirely. Two pools can hold the same assets and still behave as different systems.
+A market that changes with a game. An auction with rules nobody has named yet. A pool that responds to outside
+information. A token whose value moves through an entirely new system.
 
-Once a pool can remember events, react to information and distribute value according to its own rules, it stops being only a place where two tokens meet. It can become part of a game, a scientific project, a company or a network of physical machines.
-
-## The unfinished space
-
-Programmable is for that unfinished space. We want to explore what trading becomes when a pool can respond to a game, a company, a machine or a scientific question. Putting one more token into the same familiar pool cannot be the limit of programmable liquidity.
-
-An idea can begin in ordinary language, become code and tests, and be examined before it touches real liquidity. Software can shorten the distance between imagination and implementation, but it cannot replace judgment.
-
-Creators launch through versioned models in the [Programmable interface](https://programmable.family). Builders bring an idea, a hook or an existing public project to the [Programmable v4 Builder](https://github.com/0xprogrammable/programmable/tree/main/skills/programmable-v4-hook-builder). The complete project stays in the builder's own public repository. A small application pull request identifies one exact revision and keeps the public review trail in GitHub.
-
-## Submit a hook or project
-
-Use the Builder to prepare one clean, reproducible review target from a public GitHub repository you control.
-
-Install the Builder with:
-
-```bash
-gh skill install \
-  0xprogrammable/programmable \
-  programmable-v4-hook-builder
-```
-
-Then:
-
-1. Build the project in a public GitHub repository you control.
-2. Run the published `doctor`, `check`, `package` and `prepare-pr` operations for one clean, pushed revision. Use `scaffold` only when starting a new project.
-3. Open one small draft pull request against `0xprogrammable/programmable:main` with the generated application record and public evidence.
-4. Keep architecture discussion, findings and repairs in the same pull request. A code change creates a new review target and requires the checks to run again.
-
-[Read the Builder program](https://github.com/0xprogrammable/programmable/blob/main/BUILDER_PROGRAM.md) · [Follow the complete submission guide](https://github.com/0xprogrammable/programmable/blob/main/docs/builder/PUBLIC_GITHUB_PR_BETA.md) · [Check the current intake status](https://github.com/0xprogrammable/programmable/blob/main/docs/builder/intake-status.json)
-
-## What review covers
-
-More freedom creates more possibilities, but also more ways for a mechanism to fail. When a contract can change prices or decide where money goes, a mistake is not cosmetic.
-
-Review is tied to the exact public repository ID, commit, tree and evidence named by the application. Reviewers examine:
-
-- what the project does and why it uses Uniswap v4;
-- source, tests, dependency locks, licensing and provenance;
-- assets, value-moving paths, fees, rounding, accounting and custody;
-- hook permissions, callbacks and return deltas;
-- privileged roles, upgrades, keepers, oracles and autonomous actions;
-- external contracts, services, routing and indexing assumptions; and
-- failure behavior, expected invariants, known limitations and unresolved questions.
-
-An unfamiliar mechanic starts an architecture discussion. It is not rejected because it lacks a known category. An objective finding identifies the affected revision, reproducible evidence, applicable rule, practical impact, repair path and check that must run again.
-
-[Read the submission requirements](https://github.com/0xprogrammable/programmable/blob/main/BUILDER_PROGRAM.md#builder-responsibilities) · [Read the reviewer process](https://github.com/0xprogrammable/programmable/blob/main/docs/builder/PUBLIC_GITHUB_PR_BETA.md#reviewer-journey)
-
-## Public review records
-
-Public review makes that judgment inspectable. GitHub commits, checks, reviews, requested changes and pull-request history form the public review record. Every conclusion applies only to the exact revision it names. A later commit is a new review target; an earlier conclusion does not transfer automatically.
-
-- [Browse merged application records](https://github.com/0xprogrammable/programmable/tree/main/submissions)
-- [Follow Builder Beta pull requests](https://github.com/0xprogrammable/programmable/issues?q=is%3Apr+%22%5BBuilder+Beta%5D%22)
-- [Inspect the canonical model registry](https://github.com/0xprogrammable/programmable/blob/main/models/registry.json)
-- [Read published independent reviews](https://github.com/0xprogrammable/programmable/tree/main/audits)
-
-A completed public review means that the review record for the named revision is complete. It is not an independent audit, a safety or rug-free certification, model acceptance, deployment authorization, provider support or Uniswap endorsement. Candidate selection, integration, deployment, runtime verification and release are separate decisions with separate evidence.
-
-## Repository and documentation
-
-- [Programmable repository](https://github.com/0xprogrammable/programmable)
-- [Model library](https://github.com/0xprogrammable/programmable/blob/main/MODELS.md)
-- [Security assumptions and reporting](https://github.com/0xprogrammable/programmable/blob/main/SECURITY.md)
-- [Release requirements](https://github.com/0xprogrammable/programmable/blob/main/RELEASING.md)
-- [Builder guide for coding agents](https://github.com/0xprogrammable/programmable/blob/main/docs/builder/AGENT_SKILL.md)
+[Hookbuilder](https://github.com/0xprogrammable/hookbuilder) helps a coding agent find the right architecture around
+Uniswap v4—then build the repository, tests and evidence that architecture needs. Templates speed up familiar pieces.
+They do not define the edge of what can be invented.
 
 <p align="center">
-  <em>The tools already exist. What people will eventually learn to build with them does not.</em>
+  <a href="https://github.com/0xprogrammable/hookbuilder">
+    <img
+      src="./assets/profile/programmable-builder-skill.jpg"
+      alt="The Programmable and GitHub marks growing above a hand-painted paper garden"
+      width="100%"
+    />
+  </a>
+</p>
+
+<details>
+  <summary><strong>Give this to your coding agent</strong> — open the 20-second start</summary>
+
+  <br />
+
+  Install the portable Hookbuilder skill:
+
+  ```bash
+  gh skill install 0xprogrammable/hookbuilder
+  ```
+
+  Then describe the idea in your own words:
+
+  ```text
+  Use the Programmable Hookbuilder skill. Turn this idea into a complete, checked Uniswap v4 project and prepare its exact GitHub application: <your idea>
+  ```
+
+  [Open Hookbuilder →](https://github.com/0xprogrammable/hookbuilder)
+</details>
+
+<br />
+
+## One idea. Four public doors.
+
+<p align="center">
+  <strong>Describe</strong>&nbsp; · &nbsp;<strong>Build</strong>&nbsp; · &nbsp;<strong>Review</strong>&nbsp; · &nbsp;<strong>Launch</strong>&nbsp; · &nbsp;<strong>Discover</strong>
+</p>
+
+1. **Build — [Hookbuilder](https://github.com/0xprogrammable/hookbuilder)**<br />
+   Give a portable Agent Skill an idea or an existing repository. It helps prepare a complete, checked project and one
+   exact application revision.
+
+2. **Review — [Apply](https://github.com/0xprogrammable/apply)**<br />
+   Keep applications and review records bound to a public repository, commit, tree and evidence set. Public Custom
+   intake is currently prelaunch.
+
+3. **Launch — [Programmable](https://github.com/0xprogrammable/programmable)**<br />
+   Launch supported releases and explore what is live. Classic is live on Ethereum; finalized Custom Registry entries
+   are discoverable.
+
+4. **Integrate — [Developers](https://github.com/0xprogrammable/developers)**<br />
+   Give terminals, scanners, wallets, indexers and apps one read-only integration for Programmable launch discovery.
+
+## The strange idea is the point
+
+Programmable does not score whether a concept is familiar, fashionable or easy to categorize. An unfamiliar mechanism
+is not rejected because it lacks a template. What matters is whether its real behavior, control, value flows and failure
+modes can be understood and checked.
+
+Every review conclusion belongs to one exact public revision. Change the code and the review target changes with it.
+
+<details>
+  <summary><strong>What a review actually means</strong></summary>
+
+  <br />
+
+  A review record identifies the exact repository, commit, tree, build inputs and evidence it covers. It makes the
+  reasoning inspectable; it does not turn a changing software system into a promise.
+
+  A completed review is not an independent audit, a safety or rug-free guarantee, deployment authorization, provider
+  support or Uniswap endorsement. Deployment, runtime verification and release remain separate, evidence-bound steps.
+</details>
+
+## One integration for what comes next
+
+[Programmable Developers](https://developers.programmable.family) gives terminals, wallets, explorers, bots and other
+apps one stable, read-only way to discover Programmable Classic and finalized Custom launches. Active deployments come
+from a versioned manifest, so integrators do not have to hard-code every future contract.
+
+[Developer docs →](https://developers.programmable.family) &nbsp;·&nbsp;
+[GitHub specification →](https://github.com/0xprogrammable/developers)
+
+<br />
+
+<p align="center">
+  <a href="https://programmable.family/explore">
+    <img
+      src="./assets/profile/programmable-profile-ecosystem.jpg"
+      alt="Programmable's pink loop mark surrounded by a quiet hand-painted garden"
+      width="100%"
+    />
+  </a>
 </p>
 
 <p align="center">
-  <a href="https://programmable.family">Website</a>
+  <em>The tools already exist. What people will build with them does not.</em>
+</p>
+
+<p align="center">
+  <a href="https://programmable.family">Launch</a>
   &nbsp;·&nbsp;
-  <a href="https://github.com/0xprogrammable/programmable">GitHub</a>
+  <a href="https://github.com/0xprogrammable/hookbuilder">Build</a>
   &nbsp;·&nbsp;
-  <a href="https://x.com/0xProgrammable">X</a>
+  <a href="https://developers.programmable.family">Docs</a>
+  &nbsp;·&nbsp;
+  <a href="https://x.com/0xprogrammable">X</a>
 </p>
