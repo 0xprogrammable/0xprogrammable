@@ -2,18 +2,22 @@
 
 These assets are the self-hosted artwork for Programmable's public GitHub profile.
 
-- `programmable-night-garden.gif` centers the canonical Programmable mark in the landing page's night garden while
-  four painted flower heads move in a restrained, stepped loop.
+- `programmable-night-garden.gif` centers the Warm-Ivory Programmable mark in the landing page's deep-black night
+  garden while two painted plant groups sway independently and round microstars twinkle in staggered phases.
 - `programmable-night-garden.jpg` is the reduced-motion fallback.
-- `programmable-builder-skill.jpg` balances the canonical Programmable and white GitHub marks in a second moonlit
-  garden composition.
+- `programmable-builder-skill.jpg` balances the canonical Warm-Ivory Programmable mark and GitHub's official
+  silhouette, rendered in the same Warm-Ivory palette, in a moonlit garden composition.
 - `programmable-profile-ecosystem.jpg` closes the README with a quieter night-garden clearing.
 - `programmable-github-social-preview.jpg` is the 1280×640 repository social-preview image. GitHub uses the account
   avatar—not this image—when someone shares the shorter personal-profile URL.
+- `programmable-github-avatar-warm-ivory-4096.png` is the pure-black 4096×4096 profile master with the Warm-Ivory
+  mark sized for GitHub's circular crop.
 - `open-in-claude-code-night.png` and `copy-for-any-agent-night.png` are the two GitHub-safe action buttons beneath
   the builder artwork.
 - `animation-manifest.json` records dimensions, timing and motion constraints.
-- `source/` preserves the final background plates and exact canonical marks used by the deterministic asset builder.
+- `source/` preserves the exact Warm-Ivory mark, both website botanical cutouts, the official GitHub source mark and
+  licensed typeface used by the deterministic asset builder. Backgrounds are generated in `#010103`; the brand mark
+  is locked to `#F8F0E9`.
 
 The GitHub mark comes from [GitHub's official logo resources](https://github.com/logos) and is used only to identify
 the GitHub destination. Instrument Sans is included under the SIL Open Font License in `source/fonts/`.

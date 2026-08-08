@@ -24,7 +24,9 @@ if (rendered.status !== 0) {
   process.exit(rendered.status ?? 1);
 }
 
-const renderedHtml = rendered.stdout.replaceAll('src="./assets/', 'src="/assets/');
+const renderedHtml = rendered.stdout
+  .replaceAll('src="./assets/', 'src="/assets/')
+  .replaceAll('srcset="./assets/', 'srcset="/assets/');
 
 const outputDir = join(root, ".artifacts", "profile");
 mkdirSync(outputDir, { recursive: true });
