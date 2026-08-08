@@ -1,51 +1,57 @@
 {
+  "brand": {
+    "canvas": "#010103",
+    "warmIvory": "#f8f0e9",
+    "canonicalLogo": "assets/profile/source/programmable-loop-mark-warm-ivory.png",
+    "avatar": "assets/profile/programmable-github-avatar-warm-ivory-4096.png",
+    "sourceSha256": {
+      "assets/profile/source/programmable-loop-mark-warm-ivory.png": "d155271fb0ba10c4386db3af0d1505f5f089bb26b48c9fe78b0f9c921bc7ffaa",
+      "assets/profile/source/programmable-botanical-left-v2.webp": "7d23a88c6af36c24f7e5bfbf015bf31a4a4b0a6911e554c0d41a655f06f21ae3",
+      "assets/profile/source/programmable-botanical-right-v2.webp": "34b986fe285144963d2869d2e97f411f5be55c7587d659b8ae6f07d9e954824e",
+      "assets/profile/programmable-github-avatar-warm-ivory-4096.png": "cc1967af15b42f390ae936009203035c04c5d8f31a8c76eb4597a411e6fda6e3"
+    }
+  },
   "hero": {
     "sources": [
-      "assets/profile/source/programmable-night-sky-source.png",
-      "assets/profile/source/programmable-night-botanical-source.png"
+      "assets/profile/source/programmable-botanical-left-v2.webp",
+      "assets/profile/source/programmable-botanical-right-v2.webp"
     ],
-    "canonicalLogo": "assets/profile/source/programmable-loop-mark.png",
     "gif": "assets/profile/programmable-night-garden.gif",
     "still": "assets/profile/programmable-night-garden.jpg",
     "dimensions": [
       1400,
       560
     ],
-    "frames": 12,
-    "frameDurationMs": 400,
+    "frames": 16,
+    "frameDurationMs": 360,
     "motion": [
-      "Four painted flower heads move in small stepped sways",
-      "The camera, night sky, stems and canonical Programmable mark stay fixed",
-      "No warping, morphing, text, generated logos or global color cycling"
+      "Two painted plant groups sway independently from anchored roots",
+      "Round microstars twinkle in staggered phases without crosses or spatial drift",
+      "The camera, canvas and Warm-Ivory Programmable mark stay fixed"
     ]
   },
   "builder": {
-    "source": "assets/profile/source/programmable-builder-night-background-source.png",
     "canonicalLogos": [
-      "assets/profile/source/programmable-loop-mark.png",
+      "assets/profile/source/programmable-loop-mark-warm-ivory.png",
       "assets/profile/source/github-mark-official.png"
     ],
     "still": "assets/profile/programmable-builder-skill.jpg",
     "dimensions": [
       1400,
       560
-    ],
-    "composition": "Optically balanced Programmable and white GitHub marks in a moonlit garden"
+    ]
   },
   "ecosystem": {
-    "source": "assets/profile/source/programmable-ecosystem-night-background-source.png",
-    "canonicalLogo": "assets/profile/source/programmable-loop-mark.png",
+    "canonicalLogo": "assets/profile/source/programmable-loop-mark-warm-ivory.png",
     "still": "assets/profile/programmable-profile-ecosystem.jpg",
     "dimensions": [
       1400,
       560
-    ],
-    "composition": "A quiet night-garden clearing with the Programmable mark"
+    ]
   },
   "socialPreview": {
-    "source": "assets/profile/source/programmable-ecosystem-night-background-source.png",
     "canonicalLogos": [
-      "assets/profile/source/programmable-loop-mark.png",
+      "assets/profile/source/programmable-loop-mark-warm-ivory.png",
       "assets/profile/source/github-mark-official.png"
     ],
     "still": "assets/profile/programmable-github-social-preview.jpg",

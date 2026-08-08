@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Build the night-garden artwork used by the Programmable profile README."""
+"""Build the Warm-Ivory Night-Garden artwork used by the Programmable profile."""
 
 from __future__ import annotations
 
@@ -8,7 +8,7 @@ import json
 import math
 from pathlib import Path
 
-from PIL import Image, ImageChops, ImageDraw, ImageFilter, ImageFont, ImageOps
+from PIL import Image, ImageDraw, ImageEnhance, ImageFilter, ImageFont, ImageOps
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -16,13 +16,12 @@ ASSET_DIR = ROOT / "assets" / "profile"
 SOURCE_DIR = ASSET_DIR / "source"
 QA_DIR = ROOT / ".artifacts" / "profile"
 
-NIGHT_SKY_SOURCE = SOURCE_DIR / "programmable-night-sky-source.png"
-NIGHT_BOTANICAL_SOURCE = SOURCE_DIR / "programmable-night-botanical-source.png"
-BUILDER_BACKGROUND_SOURCE = SOURCE_DIR / "programmable-builder-night-background-source.png"
-ECOSYSTEM_BACKGROUND_SOURCE = SOURCE_DIR / "programmable-ecosystem-night-background-source.png"
-PROGRAMMABLE_MARK = SOURCE_DIR / "programmable-loop-mark.png"
+LEFT_PLANT_SOURCE = SOURCE_DIR / "programmable-botanical-left-v2.webp"
+RIGHT_PLANT_SOURCE = SOURCE_DIR / "programmable-botanical-right-v2.webp"
+PROGRAMMABLE_MARK = SOURCE_DIR / "programmable-loop-mark-warm-ivory.png"
 GITHUB_MARK = SOURCE_DIR / "github-mark-official.png"
 BUTTON_FONT = SOURCE_DIR / "fonts" / "InstrumentSans-Medium.ttf"
+AVATAR = ASSET_DIR / "programmable-github-avatar-warm-ivory-4096.png"
 
 HERO_GIF = ASSET_DIR / "programmable-night-garden.gif"
 HERO_STILL = ASSET_DIR / "programmable-night-garden.jpg"
@@ -38,28 +37,70 @@ BUILDER_SIZE = (1400, 560)
 ECOSYSTEM_SIZE = (1400, 560)
 SOCIAL_PREVIEW_SIZE = (1280, 640)
 BUTTON_SIZE = (600, 156)
-FRAME_COUNT = 12
-FRAME_DURATION_MS = 400
+FRAME_COUNT = 16
+FRAME_DURATION_MS = 360
+
+CANVAS = (1, 1, 3)
+WARM_IVORY = (248, 240, 233)
+COOL_WHITE = (229, 238, 255)
+
+# The same sparse point-star logic as the website. These are dots, never crosses.
+STATIC_STARS = [
+    (3.0, 18.0, 0.7, 0.54),
+    (9.0, 39.0, 0.65, 0.46),
+    (14.0, 8.0, 0.65, 0.40),
+    (19.0, 24.0, 0.7, 0.52),
+    (29.0, 16.0, 0.65, 0.42),
+    (37.0, 27.0, 0.7, 0.48),
+    (47.0, 9.0, 0.65, 0.44),
+    (61.0, 19.0, 0.7, 0.44),
+    (69.0, 29.0, 0.65, 0.50),
+    (77.0, 7.0, 0.7, 0.46),
+    (87.0, 36.0, 0.65, 0.42),
+    (96.0, 17.0, 0.7, 0.52),
+    (6.0, 54.0, 0.6, 0.36),
+    (12.0, 25.0, 0.6, 0.38),
+    (23.0, 34.0, 0.6, 0.34),
+    (32.0, 6.0, 0.6, 0.34),
+    (43.0, 29.0, 0.6, 0.38),
+    (52.0, 20.0, 0.6, 0.34),
+    (58.0, 12.0, 0.6, 0.36),
+    (72.0, 31.0, 0.6, 0.34),
+    (82.0, 33.5, 0.6, 0.36),
+    (91.0, 11.0, 0.6, 0.38),
+    (94.0, 47.0, 0.6, 0.34),
+    (99.0, 29.0, 0.6, 0.36),
+]
+
+TWINKLE_STARS = [
+    (7.5, 12.5, 1.0, 0.1),
+    (89.6, 14.8, 1.0, 0.7),
+    (16.8, 31.2, 1.4, 0.35),
+    (76.4, 21.5, 1.0, 0.9),
+    (94.1, 38.6, 1.3, 0.2),
+    (7.5, 50.7, 0.9, 0.58),
+    (26.2, 8.1, 1.0, 0.78),
+    (54.8, 11.7, 1.0, 0.42),
+    (68.7, 7.4, 1.4, 0.03),
+    (94.5, 52.3, 0.9, 0.66),
+    (21.7, 43.8, 1.0, 0.28),
+    (72.2, 30.4, 1.0, 0.82),
+    (2.6, 6.5, 0.8, 0.48),
+    (84.1, 4.7, 1.2, 0.16),
+    (90.8, 27.4, 0.9, 0.54),
+    (30.8, 38.6, 1.2, 0.94),
+]
 
 
-def fit_cover(image: Image.Image, size: tuple[int, int]) -> Image.Image:
-    """Resize and center-crop an image without stretching it."""
-    target_width, target_height = size
-    scale = max(target_width / image.width, target_height / image.height)
-    resized = image.resize(
-        (round(image.width * scale), round(image.height * scale)),
-        Image.Resampling.LANCZOS,
-    )
-    left = (resized.width - target_width) // 2
-    top = (resized.height - target_height) // 2
-    return resized.crop((left, top, left + target_width, top + target_height)).convert("RGBA")
+def sha256(path: Path) -> str:
+    return hashlib.sha256(path.read_bytes()).hexdigest()
 
 
 def trim_alpha(image: Image.Image) -> Image.Image:
     rgba = image.convert("RGBA")
     bounds = rgba.getchannel("A").getbbox()
     if bounds is None:
-        raise ValueError("Expected a visible mark")
+        raise ValueError("Expected a visible alpha asset")
     return rgba.crop(bounds)
 
 
@@ -68,32 +109,52 @@ def resize_to_height(image: Image.Image, height: int) -> Image.Image:
     return image.resize((width, height), Image.Resampling.LANCZOS)
 
 
+def resize_to_width(image: Image.Image, width: int) -> Image.Image:
+    height = round(image.height * width / image.width)
+    return image.resize((width, height), Image.Resampling.LANCZOS)
+
+
+def with_opacity(image: Image.Image, opacity: float) -> Image.Image:
+    rgba = image.convert("RGBA")
+    rgba.putalpha(rgba.getchannel("A").point(lambda value: round(value * opacity)))
+    return rgba
+
+
 def load_programmable_mark(height: int) -> Image.Image:
-    return resize_to_height(trim_alpha(Image.open(PROGRAMMABLE_MARK)), height)
+    source = trim_alpha(Image.open(PROGRAMMABLE_MARK))
+    mark = Image.new("RGBA", source.size, (*WARM_IVORY, 0))
+    mark.putalpha(source.getchannel("A"))
+    return resize_to_height(mark, height)
 
 
 def load_github_mark(height: int) -> Image.Image:
-    """Turn the official black-on-white GitHub source into a white mark with alpha."""
+    """Turn GitHub's official black-on-white source into a Warm-Ivory mark with alpha."""
     source = Image.open(GITHUB_MARK).convert("RGB")
     alpha = ImageOps.invert(ImageOps.grayscale(source))
     alpha = alpha.point(lambda value: 0 if value < 4 else min(255, round(value * 1.08)))
-    mark = Image.new("RGBA", source.size, (248, 249, 252, 0))
+    mark = Image.new("RGBA", source.size, (*WARM_IVORY, 0))
     mark.putalpha(alpha)
     return resize_to_height(trim_alpha(mark), height)
+
+
+def load_plant(path: Path, width: int, opacity: float) -> Image.Image:
+    plant = Image.open(path).convert("RGBA")
+    plant = ImageEnhance.Color(plant).enhance(1.18)
+    plant = ImageEnhance.Brightness(plant).enhance(1.04)
+    return with_opacity(resize_to_width(plant, width), opacity)
 
 
 def paste_mark_with_glow(
     canvas: Image.Image,
     mark: Image.Image,
     center: tuple[int, int],
-    glow_color: tuple[int, int, int] = (238, 119, 193),
-    glow_strength: float = 0.22,
-    glow_blur: int = 22,
+    glow_color: tuple[int, int, int] = WARM_IVORY,
+    glow_strength: float = 0.08,
+    glow_blur: int = 18,
 ) -> None:
-    """Keep the exact mark fixed while adding a restrained static paper halo."""
     x = round(center[0] - mark.width / 2)
     y = round(center[1] - mark.height / 2)
-    padding = 52
+    padding = 42
     padded_size = (mark.width + padding * 2, mark.height + padding * 2)
     padded_alpha = Image.new("L", padded_size, 0)
     padded_alpha.paste(mark.getchannel("A"), (padding, padding))
@@ -104,11 +165,115 @@ def paste_mark_with_glow(
     canvas.alpha_composite(mark, (x, y))
 
 
-def save_jpeg(image: Image.Image, path: Path, quality: int = 91) -> None:
+def add_ground_glow(canvas: Image.Image, strength: float = 1.0) -> None:
+    width, height = canvas.size
+    glow = Image.new("RGBA", canvas.size, (0, 0, 0, 0))
+    draw = ImageDraw.Draw(glow)
+    draw.ellipse(
+        (round(width * 0.16), round(height * 0.78), round(width * 0.84), round(height * 1.34)),
+        fill=(191, 125, 218, round(82 * strength)),
+    )
+    draw.ellipse(
+        (round(width * -0.10), round(height * 0.82), round(width * 0.30), round(height * 1.28)),
+        fill=(184, 107, 205, round(34 * strength)),
+    )
+    draw.ellipse(
+        (round(width * 0.70), round(height * 0.82), round(width * 1.10), round(height * 1.28)),
+        fill=(115, 94, 181, round(34 * strength)),
+    )
+    glow = glow.filter(ImageFilter.GaussianBlur(max(20, round(height * 0.12))))
+    canvas.alpha_composite(glow)
+
+
+def add_star_field(canvas: Image.Image, frame: int = 0) -> None:
+    width, height = canvas.size
+    stars = Image.new("RGBA", canvas.size, (0, 0, 0, 0))
+    draw = ImageDraw.Draw(stars)
+
+    for index, (x_pct, y_pct, radius, opacity) in enumerate(STATIC_STARS):
+        x = round(width * x_pct / 100)
+        y = round(height * y_pct / 100)
+        pixel_radius = max(0.75, radius * width / 1400 * 1.4)
+        color = WARM_IVORY if index % 3 else COOL_WHITE
+        alpha = round(255 * opacity)
+        draw.ellipse((x - pixel_radius, y - pixel_radius, x + pixel_radius, y + pixel_radius), fill=(*color, alpha))
+
+    glow = Image.new("RGBA", canvas.size, (0, 0, 0, 0))
+    glow_draw = ImageDraw.Draw(glow)
+    for index, (x_pct, y_pct, radius, phase) in enumerate(TWINKLE_STARS):
+        theta = math.tau * ((frame / FRAME_COUNT + phase) % 1.0)
+        pulse = ((math.sin(theta) + 1) / 2) ** (5 if index % 3 else 8)
+        alpha = round(32 + pulse * 205)
+        scale = 0.78 + pulse * 0.58
+        x = round(width * x_pct / 100)
+        y = round(height * y_pct / 100)
+        pixel_radius = max(0.85, radius * width / 1400 * scale * 1.35)
+        color = COOL_WHITE if index % 4 == 1 else WARM_IVORY
+        draw.ellipse((x - pixel_radius, y - pixel_radius, x + pixel_radius, y + pixel_radius), fill=(*color, alpha))
+        if pulse > 0.45:
+            glow_radius = pixel_radius * 2.4
+            glow_draw.ellipse(
+                (x - glow_radius, y - glow_radius, x + glow_radius, y + glow_radius),
+                fill=(*color, round(45 * pulse)),
+            )
+
+    canvas.alpha_composite(glow.filter(ImageFilter.GaussianBlur(2.2)))
+    canvas.alpha_composite(stars)
+
+
+def plant_angles(frame: int) -> tuple[float, float]:
+    theta = math.tau * frame / FRAME_COUNT
+    left = 0.18 + math.sin(theta - 1.18) * 1.10 + math.sin(theta * 2 + 0.42) * 0.24
+    right = -0.12 + math.sin(theta + 1.46) * 1.25 + math.sin(theta * 3 - 0.31) * 0.21
+    return left, right
+
+
+def paste_plants(canvas: Image.Image, frame: int, plant_width: int, opacity: float) -> None:
+    left = load_plant(LEFT_PLANT_SOURCE, plant_width, opacity)
+    right = load_plant(RIGHT_PLANT_SOURCE, plant_width, opacity)
+    left_angle, right_angle = plant_angles(frame)
+
+    left = left.rotate(
+        left_angle,
+        resample=Image.Resampling.BICUBIC,
+        center=(round(left.width * 0.41), round(left.height * 0.972)),
+        expand=False,
+        fillcolor=(0, 0, 0, 0),
+    )
+    right = right.rotate(
+        right_angle,
+        resample=Image.Resampling.BICUBIC,
+        center=(round(right.width * 0.68), round(right.height * 0.972)),
+        expand=False,
+        fillcolor=(0, 0, 0, 0),
+    )
+
+    width, height = canvas.size
+    bottom_overlap = max(8, round(height * 0.035))
+    canvas.alpha_composite(left, (-round(plant_width * 0.08), height - left.height + bottom_overlap))
+    canvas.alpha_composite(right, (width - right.width + round(plant_width * 0.09), height - right.height + bottom_overlap))
+
+
+def build_scene(
+    size: tuple[int, int],
+    frame: int = 0,
+    plant_width: int | None = None,
+    plant_opacity: float = 0.94,
+    ground_strength: float = 1.0,
+) -> Image.Image:
+    canvas = Image.new("RGBA", size, (*CANVAS, 255))
+    add_ground_glow(canvas, ground_strength)
+    add_star_field(canvas, frame)
+    if plant_width is not None:
+        paste_plants(canvas, frame, plant_width, plant_opacity)
+    return canvas
+
+
+def save_jpeg(image: Image.Image, path: Path, quality: int = 92) -> None:
     image.convert("RGB").save(path, quality=quality, optimize=True, progressive=True)
 
 
-def fit_label_font(text: str, max_width: int, initial_size: int = 36) -> ImageFont.FreeTypeFont:
+def fit_label_font(text: str, max_width: int, initial_size: int = 30) -> ImageFont.FreeTypeFont:
     size = initial_size
     while size >= 24:
         font = ImageFont.truetype(BUTTON_FONT, size)
@@ -119,153 +284,85 @@ def fit_label_font(text: str, max_width: int, initial_size: int = 36) -> ImageFo
     raise RuntimeError(f"Button label is too long: {text}")
 
 
-def build_action_button(background: Path, label: str, path: Path) -> None:
-    canvas = fit_cover(Image.open(background), BUTTON_SIZE)
-    canvas = Image.alpha_composite(canvas, Image.new("RGBA", BUTTON_SIZE, (2, 5, 20, 58)))
+def build_action_button(label: str, path: Path, frame: int) -> None:
+    canvas = build_scene(BUTTON_SIZE, frame=frame, ground_strength=0.72)
     draw = ImageDraw.Draw(canvas)
     draw.rounded_rectangle(
         (2, 2, BUTTON_SIZE[0] - 3, BUTTON_SIZE[1] - 3),
-        radius=28,
-        outline=(239, 130, 188, 210),
-        width=3,
+        radius=26,
+        outline=(*WARM_IVORY, 74),
+        width=2,
     )
 
-    button_mark = load_programmable_mark(54)
-    paste_mark_with_glow(canvas, button_mark, (56, BUTTON_SIZE[1] // 2), glow_strength=0.16, glow_blur=12)
+    button_mark = load_programmable_mark(40)
+    paste_mark_with_glow(canvas, button_mark, (51, BUTTON_SIZE[1] // 2), glow_strength=0.07, glow_blur=10)
 
-    font = fit_label_font(label, 430)
+    font = fit_label_font(label, 400)
     bounds = draw.textbbox((0, 0), label, font=font)
     text_height = bounds[3] - bounds[1]
-    draw.text((100, round((BUTTON_SIZE[1] - text_height) / 2 - bounds[1])), label, font=font, fill=(249, 250, 255, 255))
+    draw.text(
+        (104, round((BUTTON_SIZE[1] - text_height) / 2 - bounds[1])),
+        label,
+        font=font,
+        fill=(*WARM_IVORY, 255),
+    )
 
-    arrow_font = ImageFont.truetype(BUTTON_FONT, 42)
-    arrow = "→"
-    arrow_bounds = draw.textbbox((0, 0), arrow, font=arrow_font)
+    arrow_font = ImageFont.truetype(BUTTON_FONT, 40)
+    arrow_bounds = draw.textbbox((0, 0), "→", font=arrow_font)
     arrow_height = arrow_bounds[3] - arrow_bounds[1]
     draw.text(
         (BUTTON_SIZE[0] - 58, round((BUTTON_SIZE[1] - arrow_height) / 2 - arrow_bounds[1])),
-        arrow,
+        "→",
         font=arrow_font,
-        fill=(239, 130, 188, 255),
+        fill=(*WARM_IVORY, 224),
     )
     canvas.save(path, optimize=True)
 
 
 def build_static_assets() -> None:
-    """Build the two night banners and the repository social-preview card."""
-    builder = fit_cover(Image.open(BUILDER_BACKGROUND_SOURCE), BUILDER_SIZE)
-    programmable = load_programmable_mark(224)
-    github = load_github_mark(208)
-    paste_mark_with_glow(builder, programmable, (578, 244))
+    builder = build_scene(BUILDER_SIZE, frame=4, plant_width=286)
+    paste_mark_with_glow(builder, load_programmable_mark(174), (572, 244))
     paste_mark_with_glow(
         builder,
-        github,
-        (822, 244),
-        glow_color=(236, 241, 255),
-        glow_strength=0.18,
-        glow_blur=20,
+        load_github_mark(154),
+        (828, 244),
+        glow_color=WARM_IVORY,
+        glow_strength=0.07,
     )
     save_jpeg(builder, BUILDER_STILL)
 
-    ecosystem = fit_cover(Image.open(ECOSYSTEM_BACKGROUND_SOURCE), ECOSYSTEM_SIZE)
-    ecosystem_mark = load_programmable_mark(205)
-    paste_mark_with_glow(ecosystem, ecosystem_mark, (700, 242), glow_strength=0.20)
+    ecosystem = build_scene(ECOSYSTEM_SIZE, frame=8, plant_width=250, ground_strength=0.88)
+    paste_mark_with_glow(ecosystem, load_programmable_mark(140), (700, 240), glow_strength=0.06)
     save_jpeg(ecosystem, ECOSYSTEM_STILL)
 
-    social = fit_cover(Image.open(ECOSYSTEM_BACKGROUND_SOURCE), SOCIAL_PREVIEW_SIZE)
-    social_programmable = load_programmable_mark(270)
-    social_github = load_github_mark(250)
-    paste_mark_with_glow(social, social_programmable, (492, 298), glow_strength=0.24)
+    social = build_scene(SOCIAL_PREVIEW_SIZE, frame=12, plant_width=276)
+    paste_mark_with_glow(social, load_programmable_mark(208), (492, 292))
     paste_mark_with_glow(
         social,
-        social_github,
-        (788, 298),
-        glow_color=(236, 241, 255),
-        glow_strength=0.20,
-        glow_blur=22,
+        load_github_mark(180),
+        (788, 292),
+        glow_color=WARM_IVORY,
+        glow_strength=0.07,
     )
-    save_jpeg(social, SOCIAL_PREVIEW, quality=89)
-
+    save_jpeg(social, SOCIAL_PREVIEW, quality=91)
     if SOCIAL_PREVIEW.stat().st_size >= 1_000_000:
         raise RuntimeError("Repository social preview must stay below GitHub's 1 MB limit")
 
-    build_action_button(BUILDER_BACKGROUND_SOURCE, "Open in Claude Code", CLAUDE_BUTTON)
-    build_action_button(ECOSYSTEM_BACKGROUND_SOURCE, "Prompt for Codex + other agents", ANY_AGENT_BUTTON)
+    build_action_button("Open in Claude Code", CLAUDE_BUTTON, frame=3)
+    build_action_button("Prompt for any coding agent", ANY_AGENT_BUTTON, frame=11)
 
 
-# Head-only masks let the painted flowers sway while the camera, stems and paper stay fixed.
-# Each tuple is: (left, top, right, bottom, x amplitude, angle amplitude, phase).
-FLOWER_MOTIONS = [
-    (98, 382, 232, 482, 4.0, 1.15, 0),
-    (244, 414, 313, 482, 2.5, 1.35, 3),
-    (1022, 440, 1178, 556, 4.0, 1.10, 6),
-    (1160, 380, 1232, 456, 2.5, 1.30, 9),
-]
-
-
-def flower_mask(
-    botanical: Image.Image,
-    sky: Image.Image,
-    box: tuple[int, int, int, int],
-) -> Image.Image:
-    """Isolate painted pixels from the matching sky inside a feathered oval."""
-    diff = ImageChops.difference(botanical.crop(box).convert("RGB"), sky.crop(box).convert("RGB"))
-    gray = ImageOps.grayscale(diff)
-    contrast = gray.point(lambda value: 0 if value < 9 else min(255, (value - 9) * 12))
-    contrast = contrast.filter(ImageFilter.MaxFilter(5)).filter(ImageFilter.GaussianBlur(1.2))
-
-    oval = Image.new("L", contrast.size, 0)
-    ImageDraw.Draw(oval).ellipse((2, 2, oval.width - 3, oval.height - 3), fill=255)
-    oval = oval.filter(ImageFilter.GaussianBlur(4))
-    return ImageChops.multiply(contrast, oval)
-
-
-def prepare_flower_layers(
-    botanical: Image.Image,
-    sky: Image.Image,
-) -> tuple[Image.Image, list[tuple[Image.Image, tuple[int, int, int, int], float, float, int]], Image.Image]:
-    """Remove four flower heads from the base and return movable painted layers."""
-    fixed = botanical.copy()
-    union = Image.new("L", botanical.size, 0)
-    layers: list[tuple[Image.Image, tuple[int, int, int, int], float, float, int]] = []
-
-    for left, top, right, bottom, x_amp, angle_amp, phase in FLOWER_MOTIONS:
-        box = (left, top, right, bottom)
-        mask = flower_mask(botanical, sky, box)
-        flower = botanical.crop(box)
-        flower.putalpha(mask)
-        fixed.paste(sky.crop(box), (left, top), mask)
-        union.paste(ImageChops.lighter(union.crop(box), mask), (left, top))
-        layers.append((flower, box, x_amp, angle_amp, phase))
-
-    return fixed, layers, union
-
-
-def build_hero_frames() -> tuple[list[Image.Image], Image.Image]:
-    botanical = fit_cover(Image.open(NIGHT_BOTANICAL_SOURCE), HERO_SIZE)
-    sky = fit_cover(Image.open(NIGHT_SKY_SOURCE), HERO_SIZE)
-    base, flowers, mask = prepare_flower_layers(botanical, sky)
-    mark = load_programmable_mark(226)
+def build_hero_frames() -> list[Image.Image]:
+    mark = load_programmable_mark(166)
     frames: list[Image.Image] = []
-
     for frame in range(FRAME_COUNT):
-        canvas = base.copy()
-        for flower, box, x_amp, angle_amp, phase in flowers:
-            theta = ((frame + phase) % FRAME_COUNT) * math.tau / FRAME_COUNT
-            x_offset = round(math.sin(theta) * x_amp)
-            y_offset = round((1 - math.cos(theta)) * 0.55)
-            angle = math.sin(theta) * angle_amp
-            moved = flower.rotate(angle, resample=Image.Resampling.BICUBIC, expand=False)
-            canvas.alpha_composite(moved, (box[0] + x_offset, box[1] + y_offset))
-
-        # The canonical mark and its halo are always pasted last and never animated.
-        paste_mark_with_glow(canvas, mark, (HERO_SIZE[0] // 2, 263))
+        canvas = build_scene(HERO_SIZE, frame=frame, plant_width=286)
+        paste_mark_with_glow(canvas, mark, (HERO_SIZE[0] // 2, 244))
         frames.append(canvas.convert("RGB"))
+    return frames
 
-    return frames, mask
 
-
-def global_palette(frames: list[Image.Image], colors: int) -> Image.Image:
+def global_palette(frames: list[Image.Image], colors: int = 192) -> Image.Image:
     sample_width = 280
     sample_height = round(frames[0].height * sample_width / frames[0].width)
     columns = 4
@@ -280,8 +377,7 @@ def global_palette(frames: list[Image.Image], colors: int) -> Image.Image:
 
 
 def save_gif(frames: list[Image.Image], path: Path) -> None:
-    palette = global_palette(frames, 256)
-    # A shared palette without error-diffusion keeps every non-moving pixel identical.
+    palette = global_palette(frames)
     quantized = [frame.quantize(palette=palette, dither=Image.Dither.NONE) for frame in frames]
     quantized[0].save(
         path,
@@ -304,10 +400,10 @@ def decode_gif(path: Path) -> list[Image.Image]:
 
 
 def save_contact_sheet(frames: list[Image.Image], path: Path) -> None:
-    picks = [0, 3, 6, 9]
+    picks = [0, 4, 8, 12]
     thumb_width = 700
     thumb_height = round(frames[0].height * thumb_width / frames[0].width)
-    sheet = Image.new("RGB", (thumb_width * 2, thumb_height * 2), (9, 13, 35))
+    sheet = Image.new("RGB", (thumb_width * 2, thumb_height * 2), CANVAS)
     for index, frame_index in enumerate(picks):
         sheet.paste(
             frames[frame_index].resize((thumb_width, thumb_height), Image.Resampling.LANCZOS),
@@ -317,75 +413,88 @@ def save_contact_sheet(frames: list[Image.Image], path: Path) -> None:
     sheet.save(path, optimize=True)
 
 
-def crop_hashes(frames: list[Image.Image], box: tuple[int, int, int, int]) -> list[str]:
-    return [hashlib.sha256(frame.crop(box).tobytes()).hexdigest() for frame in frames]
-
-
-def assert_static_center(frames: list[Image.Image], box: tuple[int, int, int, int], label: str) -> None:
-    hashes = crop_hashes(frames, box)
+def assert_static_center(frames: list[Image.Image]) -> None:
+    box = (610, 145, 790, 345)
+    hashes = [hashlib.sha256(frame.crop(box).tobytes()).hexdigest() for frame in frames]
     if len(set(hashes)) != 1:
-        raise RuntimeError(f"{label} protected logo area changed between frames")
+        raise RuntimeError("The protected Warm-Ivory logo area changed between frames")
+
+
+def assert_brand_sources() -> None:
+    mark = Image.open(PROGRAMMABLE_MARK).convert("RGBA")
+    opaque = [pixel[:3] for pixel in mark.getdata() if pixel[3] >= 250]
+    exact_warm_ivory = sum(color == WARM_IVORY for color in opaque)
+    if not opaque or exact_warm_ivory / len(opaque) < 0.97:
+        raise RuntimeError("Programmable mark core must be Warm Ivory")
+    avatar = Image.open(AVATAR).convert("RGBA")
+    if avatar.getpixel((0, 0))[:3] != (0, 0, 0):
+        raise RuntimeError("GitHub avatar must retain its pure-black canvas")
 
 
 def main() -> None:
     ASSET_DIR.mkdir(parents=True, exist_ok=True)
     QA_DIR.mkdir(parents=True, exist_ok=True)
-
+    assert_brand_sources()
     build_static_assets()
 
-    hero_frames, flower_mask_image = build_hero_frames()
+    hero_frames = build_hero_frames()
     save_gif(hero_frames, HERO_GIF)
-    hero_frames[0].save(HERO_STILL, quality=92, optimize=True, progressive=True)
+    save_jpeg(hero_frames[0], HERO_STILL, quality=93)
 
     encoded_hero = decode_gif(HERO_GIF)
-    assert_static_center(encoded_hero, (565, 130, 835, 400), "Hero")
+    assert_static_center(encoded_hero)
     save_contact_sheet(encoded_hero, QA_DIR / "night-garden-contact-sheet.png")
-    flower_mask_image.save(QA_DIR / "night-garden-flower-mask.png", optimize=True)
 
     manifest = {
+        "brand": {
+            "canvas": "#010103",
+            "warmIvory": "#f8f0e9",
+            "canonicalLogo": str(PROGRAMMABLE_MARK.relative_to(ROOT)),
+            "avatar": str(AVATAR.relative_to(ROOT)),
+            "sourceSha256": {
+                str(PROGRAMMABLE_MARK.relative_to(ROOT)): sha256(PROGRAMMABLE_MARK),
+                str(LEFT_PLANT_SOURCE.relative_to(ROOT)): sha256(LEFT_PLANT_SOURCE),
+                str(RIGHT_PLANT_SOURCE.relative_to(ROOT)): sha256(RIGHT_PLANT_SOURCE),
+                str(AVATAR.relative_to(ROOT)): sha256(AVATAR),
+            },
+        },
         "hero": {
             "sources": [
-                str(NIGHT_SKY_SOURCE.relative_to(ROOT)),
-                str(NIGHT_BOTANICAL_SOURCE.relative_to(ROOT)),
+                str(LEFT_PLANT_SOURCE.relative_to(ROOT)),
+                str(RIGHT_PLANT_SOURCE.relative_to(ROOT)),
             ],
-            "canonicalLogo": str(PROGRAMMABLE_MARK.relative_to(ROOT)),
             "gif": str(HERO_GIF.relative_to(ROOT)),
             "still": str(HERO_STILL.relative_to(ROOT)),
             "dimensions": list(HERO_SIZE),
             "frames": FRAME_COUNT,
             "frameDurationMs": FRAME_DURATION_MS,
             "motion": [
-                "Four painted flower heads move in small stepped sways",
-                "The camera, night sky, stems and canonical Programmable mark stay fixed",
-                "No warping, morphing, text, generated logos or global color cycling",
+                "Two painted plant groups sway independently from anchored roots",
+                "Round microstars twinkle in staggered phases without crosses or spatial drift",
+                "The camera, canvas and Warm-Ivory Programmable mark stay fixed",
             ],
         },
         "builder": {
-            "source": str(BUILDER_BACKGROUND_SOURCE.relative_to(ROOT)),
             "canonicalLogos": [
                 str(PROGRAMMABLE_MARK.relative_to(ROOT)),
                 str(GITHUB_MARK.relative_to(ROOT)),
             ],
             "still": str(BUILDER_STILL.relative_to(ROOT)),
             "dimensions": list(BUILDER_SIZE),
-            "composition": "Optically balanced Programmable and white GitHub marks in a moonlit garden",
         },
         "ecosystem": {
-            "source": str(ECOSYSTEM_BACKGROUND_SOURCE.relative_to(ROOT)),
             "canonicalLogo": str(PROGRAMMABLE_MARK.relative_to(ROOT)),
             "still": str(ECOSYSTEM_STILL.relative_to(ROOT)),
             "dimensions": list(ECOSYSTEM_SIZE),
-            "composition": "A quiet night-garden clearing with the Programmable mark",
         },
         "socialPreview": {
-            "source": str(ECOSYSTEM_BACKGROUND_SOURCE.relative_to(ROOT)),
             "canonicalLogos": [
                 str(PROGRAMMABLE_MARK.relative_to(ROOT)),
                 str(GITHUB_MARK.relative_to(ROOT)),
             ],
             "still": str(SOCIAL_PREVIEW.relative_to(ROOT)),
             "dimensions": list(SOCIAL_PREVIEW_SIZE),
-            "maxBytes": 1000000,
+            "maxBytes": 1_000_000,
         },
         "actions": {
             "font": str(BUTTON_FONT.relative_to(ROOT)),
