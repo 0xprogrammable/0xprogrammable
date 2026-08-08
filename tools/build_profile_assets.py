@@ -8,7 +8,7 @@ import json
 import math
 from pathlib import Path
 
-from PIL import Image, ImageDraw, ImageEnhance, ImageFilter, ImageFont, ImageOps
+from PIL import Image, ImageDraw, ImageEnhance, ImageFilter, ImageOps
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -20,7 +20,7 @@ LEFT_PLANT_SOURCE = SOURCE_DIR / "programmable-botanical-left-v2.webp"
 RIGHT_PLANT_SOURCE = SOURCE_DIR / "programmable-botanical-right-v2.webp"
 PROGRAMMABLE_MARK = SOURCE_DIR / "programmable-loop-mark-warm-ivory.png"
 GITHUB_MARK = SOURCE_DIR / "github-mark-official.png"
-BUTTON_FONT = SOURCE_DIR / "fonts" / "InstrumentSans-Medium.ttf"
+ECOSYSTEM_SOURCE = SOURCE_DIR / "programmable-connected-night-garden-v1.png"
 AVATAR = ASSET_DIR / "programmable-github-avatar-warm-ivory-4096.png"
 
 HERO_GIF = ASSET_DIR / "programmable-night-garden.gif"
@@ -28,15 +28,12 @@ HERO_STILL = ASSET_DIR / "programmable-night-garden.jpg"
 BUILDER_STILL = ASSET_DIR / "programmable-builder-skill.jpg"
 ECOSYSTEM_STILL = ASSET_DIR / "programmable-profile-ecosystem.jpg"
 SOCIAL_PREVIEW = ASSET_DIR / "programmable-github-social-preview.jpg"
-CLAUDE_BUTTON = ASSET_DIR / "open-in-claude-code-night.png"
-ANY_AGENT_BUTTON = ASSET_DIR / "copy-for-any-agent-night.png"
 MANIFEST = ASSET_DIR / "animation-manifest.json"
 
 HERO_SIZE = (1400, 560)
 BUILDER_SIZE = (1400, 560)
 ECOSYSTEM_SIZE = (1400, 560)
 SOCIAL_PREVIEW_SIZE = (1280, 640)
-BUTTON_SIZE = (600, 156)
 FRAME_COUNT = 16
 FRAME_DURATION_MS = 360
 
@@ -273,52 +270,6 @@ def save_jpeg(image: Image.Image, path: Path, quality: int = 92) -> None:
     image.convert("RGB").save(path, quality=quality, optimize=True, progressive=True)
 
 
-def fit_label_font(text: str, max_width: int, initial_size: int = 30) -> ImageFont.FreeTypeFont:
-    size = initial_size
-    while size >= 24:
-        font = ImageFont.truetype(BUTTON_FONT, size)
-        bounds = font.getbbox(text)
-        if bounds[2] - bounds[0] <= max_width:
-            return font
-        size -= 1
-    raise RuntimeError(f"Button label is too long: {text}")
-
-
-def build_action_button(label: str, path: Path, frame: int) -> None:
-    canvas = build_scene(BUTTON_SIZE, frame=frame, ground_strength=0.72)
-    draw = ImageDraw.Draw(canvas)
-    draw.rounded_rectangle(
-        (2, 2, BUTTON_SIZE[0] - 3, BUTTON_SIZE[1] - 3),
-        radius=26,
-        outline=(*WARM_IVORY, 74),
-        width=2,
-    )
-
-    button_mark = load_programmable_mark(40)
-    paste_mark_with_glow(canvas, button_mark, (51, BUTTON_SIZE[1] // 2), glow_strength=0.07, glow_blur=10)
-
-    font = fit_label_font(label, 400)
-    bounds = draw.textbbox((0, 0), label, font=font)
-    text_height = bounds[3] - bounds[1]
-    draw.text(
-        (104, round((BUTTON_SIZE[1] - text_height) / 2 - bounds[1])),
-        label,
-        font=font,
-        fill=(*WARM_IVORY, 255),
-    )
-
-    arrow_font = ImageFont.truetype(BUTTON_FONT, 40)
-    arrow_bounds = draw.textbbox((0, 0), "→", font=arrow_font)
-    arrow_height = arrow_bounds[3] - arrow_bounds[1]
-    draw.text(
-        (BUTTON_SIZE[0] - 58, round((BUTTON_SIZE[1] - arrow_height) / 2 - arrow_bounds[1])),
-        "→",
-        font=arrow_font,
-        fill=(*WARM_IVORY, 224),
-    )
-    canvas.save(path, optimize=True)
-
-
 def build_static_assets() -> None:
     builder = build_scene(BUILDER_SIZE, frame=4, plant_width=286)
     paste_mark_with_glow(builder, load_programmable_mark(174), (572, 244))
@@ -331,8 +282,11 @@ def build_static_assets() -> None:
     )
     save_jpeg(builder, BUILDER_STILL)
 
-    ecosystem = build_scene(ECOSYSTEM_SIZE, frame=8, plant_width=250, ground_strength=0.88)
-    paste_mark_with_glow(ecosystem, load_programmable_mark(140), (700, 240), glow_strength=0.06)
+    ecosystem = ImageOps.fit(
+        Image.open(ECOSYSTEM_SOURCE).convert("RGB"),
+        ECOSYSTEM_SIZE,
+        method=Image.Resampling.LANCZOS,
+    )
     save_jpeg(ecosystem, ECOSYSTEM_STILL)
 
     social = build_scene(SOCIAL_PREVIEW_SIZE, frame=12, plant_width=276)
@@ -347,10 +301,6 @@ def build_static_assets() -> None:
     save_jpeg(social, SOCIAL_PREVIEW, quality=91)
     if SOCIAL_PREVIEW.stat().st_size >= 1_000_000:
         raise RuntimeError("Repository social preview must stay below GitHub's 1 MB limit")
-
-    build_action_button("Open in Claude Code", CLAUDE_BUTTON, frame=3)
-    build_action_button("Prompt for any coding agent", ANY_AGENT_BUTTON, frame=11)
-
 
 def build_hero_frames() -> list[Image.Image]:
     mark = load_programmable_mark(166)
@@ -483,7 +433,8 @@ def main() -> None:
             "dimensions": list(BUILDER_SIZE),
         },
         "ecosystem": {
-            "canonicalLogo": str(PROGRAMMABLE_MARK.relative_to(ROOT)),
+            "source": str(ECOSYSTEM_SOURCE.relative_to(ROOT)),
+            "sourceSha256": sha256(ECOSYSTEM_SOURCE),
             "still": str(ECOSYSTEM_STILL.relative_to(ROOT)),
             "dimensions": list(ECOSYSTEM_SIZE),
         },
@@ -495,14 +446,6 @@ def main() -> None:
             "still": str(SOCIAL_PREVIEW.relative_to(ROOT)),
             "dimensions": list(SOCIAL_PREVIEW_SIZE),
             "maxBytes": 1_000_000,
-        },
-        "actions": {
-            "font": str(BUTTON_FONT.relative_to(ROOT)),
-            "dimensions": list(BUTTON_SIZE),
-            "buttons": [
-                str(CLAUDE_BUTTON.relative_to(ROOT)),
-                str(ANY_AGENT_BUTTON.relative_to(ROOT)),
-            ],
         },
     }
     MANIFEST.write_text(json.dumps(manifest, indent=2) + "\n", encoding="utf-8")

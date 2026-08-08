@@ -42,7 +42,8 @@
     ]
   },
   "ecosystem": {
-    "canonicalLogo": "assets/profile/source/programmable-loop-mark-warm-ivory.png",
+    "source": "assets/profile/source/programmable-connected-night-garden-v1.png",
+    "sourceSha256": "516041874831a62148e9db116cd2e8c94ff3ce69bca034336bddee9bf26996c9",
     "still": "assets/profile/programmable-profile-ecosystem.jpg",
     "dimensions": [
       1400,
@@ -60,16 +61,5 @@
       640
     ],
     "maxBytes": 1000000
-  },
-  "actions": {
-    "font": "assets/profile/source/fonts/InstrumentSans-Medium.ttf",
-    "dimensions": [
-      600,
-      156
-    ],
-    "buttons": [
-      "assets/profile/open-in-claude-code-night.png",
-      "assets/profile/copy-for-any-agent-night.png"
-    ]
   }
 }
