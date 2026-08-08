@@ -19,142 +19,150 @@
 <h3 align="center">Tokens that behave how you imagine</h3>
 
 <p align="center">
-  Describe an idea in ordinary language. Programmable v4 Builder helps turn it into an open Uniswap v4 project.<br />
-  Programmable gives supported releases a traceable path to launch and discovery.
+  Describe a Uniswap v4 product in plain language. Programmable v4 Builder helps a coding agent design, implement,
+  check and document one exact revision. Review, deployment and public availability remain separate states.
 </p>
 
 <p align="center">
-  <a href="https://github.com/0xprogrammable/hookbuilder"><strong>Build with Programmable v4 Builder</strong></a>
+  <a href="https://github.com/0xprogrammable/hookbuilder"><strong>Use the Builder</strong></a>
   &nbsp;·&nbsp;
-  <a href="https://programmable.market/explore">Explore tokens</a>
+  <a href="https://github.com/0xprogrammable/apply">Read the review rules</a>
   &nbsp;·&nbsp;
   <a href="https://programmable.market/docs/developers">Documentation</a>
 </p>
 
 <br />
 
-## Start with a sentence, not a specification
+## Give your coding agent one prompt
 
-A market that changes with a game. An auction with rules nobody has named yet. A pool that responds to outside
-information. A token whose value moves through an entirely new system.
-
-[Programmable v4 Builder](https://github.com/0xprogrammable/hookbuilder) helps a coding agent find the right architecture around
-Uniswap v4—then build the repository, tests and evidence that architecture needs. Templates speed up familiar pieces.
-They do not define the edge of what can be invented.
+Copy the block below into your coding agent. When it asks what you want to build, answer in your own words.
 
 <p align="center">
   <a href="https://github.com/0xprogrammable/hookbuilder">
     <img
       src="./assets/profile/programmable-builder-skill.jpg"
-      alt="Open Programmable v4 Builder on GitHub"
+      alt="Programmable v4 Builder and GitHub in the night garden"
       width="100%"
     />
   </a>
 </p>
-
-<p align="center">
-  <a href="https://claude.ai/code/new?q=Install%20and%20use%20the%20Programmable%20v4%20Builder%20skill%20from%20https%3A%2F%2Fgithub.com%2F0xprogrammable%2Fhookbuilder.%20Turn%20my%20idea%20into%20a%20complete%2C%20checked%20Uniswap%20v4%20project%20and%20prepare%20its%20exact%20GitHub%20application.%20Start%20by%20asking%20me%20for%20the%20idea."><img src="./assets/profile/open-in-claude-code-night.png" alt="Open Programmable v4 Builder in Claude Code" width="300" /></a>
-  &nbsp;&nbsp;
-  <a href="#use-with-codex-or-another-coding-agent"><img src="./assets/profile/copy-for-any-agent-night.png" alt="Open the Programmable v4 Builder prompt for a coding agent" width="300" /></a>
-</p>
-
-<a id="use-with-codex-or-another-coding-agent"></a>
-
-### Use with Codex or another coding agent
-
-Copy this into your agent and send it:
 
 ```text
-Install and use the Programmable v4 Builder skill from:
+Use Programmable v4 Builder from:
 https://github.com/0xprogrammable/hookbuilder
 
-Turn my idea into a complete, checked Uniswap v4 project and prepare its exact GitHub application.
-Start by asking me for the idea.
+Before changing project files:
+
+1. Read the current repository instructions and install the complete latest tagged release of
+   `skills/programmable-v4-hook-builder` for this coding agent at user scope. Include its references, assets, schemas,
+   validators and scripts. Do not copy only `SKILL.md`.
+
+2. Verify the installed package and tell me the exact Builder release tag and source commit you are using.
+
+3. Ask me exactly:
+   "What do you want to build?"
+
+Wait for my answer before choosing an architecture or editing project files.
+
+After I answer:
+
+4. Follow the installed Builder workflow. Inspect any existing repository before editing and preserve unrelated work.
+
+5. Turn my confirmed idea into a short design card covering the user experience, mechanism, value flows, fees, custody,
+   authorities, dependencies, failure behavior, claim or exit path and unresolved material decisions. Ask only questions
+   whose answers change the product, economics, custody, authority, dependencies or risk. Never invent addresses,
+   beneficiaries, fees, permissions, oracle facts, evidence or test results.
+
+6. Build the smallest complete implementation that satisfies the confirmed behavior. Use the Builder-selected references
+   and pinned official dependencies where appropriate. Implement and test the relevant contracts, application code,
+   services and integration boundaries.
+
+7. Run the real project build, tests and applicable security checks together with the deterministic Builder operations
+   defined by the installed release. Record the exact commands, revision and observed results. Keep missing, blocked,
+   failed and passed checks separate.
+
+8. Produce an evidence summary containing the repository, branch, full commit, tree, changed files, tests, security
+   checks, generated evidence, unresolved findings, external dependencies and the strongest truthful current status.
+
+9. Prepare an exact-revision application package only when the source is clean and revision-bound. Check the current
+   intake status at https://github.com/0xprogrammable/apply. If intake or another required gate is unavailable, stop at
+   the strongest completed local state and report that boundary.
+
+10. Do not push, publish source, open or update a pull request, submit an application, sign, deploy, merge, move funds or
+    change an external account without my explicit approval for that exact action.
+
+Keep these states separate at all times:
+- design;
+- local implementation and checks;
+- external review;
+- acceptance;
+- deployment and source or runtime verification;
+- finality and indexing; and
+- public availability.
+
+A green local check is not an audit, safety guarantee, approval, deployment, launch authorization, provider statement
+or Uniswap endorsement.
 ```
 
+## What each repository owns
+
+The public repositories are split by responsibility:
+
+- **[Programmable v4 Builder](https://github.com/0xprogrammable/hookbuilder)** turns an idea or existing repository
+  into an implementation, checks and one exact application revision.
+- **[Programmable Apply](https://github.com/0xprogrammable/apply)** publishes the review rules, deterministic checker,
+  application records and discovery registry. Current intake status is published there.
+- **[Programmable](https://github.com/0xprogrammable/programmable)** contains the platform contracts, website and
+  Explorer.
+- **[Programmable Developers](https://github.com/0xprogrammable/developers)** defines the read-only manifest, launch
+  records and integration rules used by external apps.
+
+A local Builder or checker result does not approve a project or authorize a launch.
+
+## Review scope
+
+[Programmable Apply](https://github.com/0xprogrammable/apply) checks artifact identity, functionality, disclosure,
+integrity and launch compatibility for one exact public revision. A source change creates a new review target.
+
 <details>
-  <summary><strong>Manual install command</strong></summary>
+  <summary><strong>What a review record proves</strong></summary>
 
   <br />
 
-  ```bash
-  gh skill install 0xprogrammable/hookbuilder
-  ```
-
-  [Open Programmable v4 Builder →](https://github.com/0xprogrammable/hookbuilder)
-</details>
-
-<br />
-
-## One idea. Four public paths.
-
-<p align="center">
-  <strong>Build</strong>&nbsp; · &nbsp;<strong>Review</strong>&nbsp; · &nbsp;<strong>Launch</strong>&nbsp; · &nbsp;<strong>Integrate</strong>
-</p>
-
-1. **Build — [Programmable v4 Builder](https://github.com/0xprogrammable/hookbuilder)**<br />
-   Give a portable Agent Skill an idea or an existing repository. It helps prepare a complete, checked project and one
-   exact application revision.
-
-2. **Review — [Programmable Registry](https://github.com/0xprogrammable/apply)**<br />
-   Keep applications and review records bound to exact public source revisions and evidence.
-
-3. **Launch — [Programmable](https://github.com/0xprogrammable/programmable)**<br />
-   Launch supported releases and discover what is live. Classic is live on Ethereum; Custom launches appear only when
-   their Registry entry and release evidence are finalized.
-
-4. **Integrate — [Developers](https://github.com/0xprogrammable/developers)**<br />
-   Give terminals, scanners, wallets, indexers and apps one read-only integration for Programmable launch discovery.
-
-## The strange idea is the point
-
-Programmable does not score whether a concept is familiar, fashionable or easy to categorize. An unfamiliar mechanism
-is not rejected because it lacks a template. What matters is whether its real behavior, control, value flows and failure
-modes can be understood and checked.
-
-Every review conclusion belongs to one exact public revision. Change the code and the review target changes with it.
-
-<details>
-  <summary><strong>What a review actually means</strong></summary>
-
-  <br />
-
-  A review record identifies the exact source repositories, commits, trees, build inputs and evidence it covers. It makes the
-  reasoning inspectable; it does not turn a changing software system into a promise.
+  A review record makes its target, evidence and reasoning inspectable. It does not turn changing software into a
+  promise.
 
   A completed review is not an independent audit, a safety or rug-free guarantee, deployment authorization, provider
-  support or Uniswap endorsement. Deployment, runtime verification and release remain separate, evidence-bound steps.
+  support or Uniswap endorsement. Deployment, runtime verification and release remain separate evidence-bound steps.
 </details>
 
-## One integration for what comes next
+## Developer API
 
-[Programmable Developers](https://programmable.market/docs/developers) gives terminals, wallets, explorers, bots and other
-apps one stable, read-only way to discover Programmable Classic and finalized Custom launches. Active deployments come
-from a versioned manifest, so integrators do not have to hard-code every future contract.
+[Programmable Developers](https://programmable.market/docs/developers) defines the v2 response schemas, versioned
+deployment manifest and consumer rules for launch discovery. Integrations use recorded provenance, finality,
+capabilities and market state instead of inferring support from names or creator metadata.
 
-[Documentation →](https://programmable.market/docs/developers) &nbsp;·&nbsp;
-[GitHub specification →](https://github.com/0xprogrammable/developers)
+[Open the documentation](https://programmable.market/docs/developers) &nbsp;·&nbsp;
+[Read the GitHub specification](https://github.com/0xprogrammable/developers)
 
 <br />
 
 <p align="center">
-  <a href="https://programmable.market/explore">
+  <a href="https://programmable.market/docs/developers">
     <img
       src="./assets/profile/programmable-profile-ecosystem.jpg"
-      alt="Explore Programmable launches"
+      alt="A connected night garden representing Programmable launch data"
       width="100%"
     />
   </a>
 </p>
 
 <p align="center">
-  <em>The tools already exist. What people will build with them does not.</em>
-</p>
-
-<p align="center">
-  <a href="https://programmable.market">Launch</a>
+  <a href="https://programmable.market">Website</a>
   &nbsp;·&nbsp;
-  <a href="https://github.com/0xprogrammable/hookbuilder">Build</a>
+  <a href="https://github.com/0xprogrammable/hookbuilder">Builder</a>
+  &nbsp;·&nbsp;
+  <a href="https://github.com/0xprogrammable/apply">Review rules</a>
   &nbsp;·&nbsp;
   <a href="https://programmable.market/docs/developers">Docs</a>
   &nbsp;·&nbsp;
