@@ -97,7 +97,7 @@ Start by asking me for the idea.
    exact application revision.
 
 2. **Review — [Programmable Registry](https://github.com/0xprogrammable/apply)**<br />
-   Keep applications and review records bound to one public repository, commit, tree and evidence set.
+   Keep applications and review records bound to exact public source revisions and evidence.
 
 3. **Launch — [Programmable](https://github.com/0xprogrammable/programmable)**<br />
    Launch supported releases and discover what is live. Classic is live on Ethereum; Custom launches appear only when
@@ -119,7 +119,7 @@ Every review conclusion belongs to one exact public revision. Change the code an
 
   <br />
 
-  A review record identifies the exact repository, commit, tree, build inputs and evidence it covers. It makes the
+  A review record identifies the exact source repositories, commits, trees, build inputs and evidence it covers. It makes the
   reasoning inspectable; it does not turn a changing software system into a promise.
 
   A completed review is not an independent audit, a safety or rug-free guarantee, deployment authorization, provider
