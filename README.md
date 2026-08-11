@@ -26,7 +26,7 @@
 <p align="center">
   <a href="https://github.com/0xprogrammable/hookbuilder"><strong>Use the Builder</strong></a>
   &nbsp;·&nbsp;
-  <a href="https://github.com/0xprogrammable/submit-launch">Submit a launch</a>
+  <a href="https://github.com/0xprogrammable/submit-launch">Launch review</a>
   &nbsp;·&nbsp;
   <a href="https://programmable.market/docs/developers">Documentation</a>
 </p>
@@ -38,8 +38,8 @@
 | You want to | Start here |
 | --- | --- |
 | Build or test a Uniswap v4 project | [Hookbuilder](https://github.com/0xprogrammable/hookbuilder) |
-| Submit one completed project for launch review | [Submit a Launch](https://github.com/0xprogrammable/submit-launch) |
-| Publish a reusable hook template | [Submit a Template](https://github.com/0xprogrammable/submit-template) |
+| Read the review path for one completed project | [Submit a Launch](https://github.com/0xprogrammable/submit-launch) |
+| Read the requirements for a reusable launch template | [Submit a Template](https://github.com/0xprogrammable/submit-template) |
 | Integrate Programmable launches | [Developer documentation](https://developers.programmable.market) |
 
 ## Give your coding agent one prompt
@@ -122,7 +122,7 @@ The public repositories are split by responsibility:
 - **[Submit a Launch](https://github.com/0xprogrammable/submit-launch)** is the public review path for one completed
   project that its creator wants to launch.
 - **[Submit a Template](https://github.com/0xprogrammable/submit-template)** defines the planned review path for a
-  reusable hook template that other creators can launch.
+  reusable launch template that other creators can launch.
 - **[Programmable](https://github.com/0xprogrammable/programmable)** contains the platform contracts, website and
   Explorer.
 - **[Programmable Developers](https://github.com/0xprogrammable/developers)** defines the read-only manifest, launch
@@ -173,9 +173,9 @@ capabilities and market state instead of inferring support from names or creator
   &nbsp;·&nbsp;
   <a href="https://github.com/0xprogrammable/hookbuilder">Builder</a>
   &nbsp;·&nbsp;
-  <a href="https://github.com/0xprogrammable/submit-launch">Submit a launch</a>
+  <a href="https://github.com/0xprogrammable/submit-launch">Launch review</a>
   &nbsp;·&nbsp;
-  <a href="https://github.com/0xprogrammable/submit-template">Submit a template</a>
+  <a href="https://github.com/0xprogrammable/submit-template">Template requirements</a>
   &nbsp;·&nbsp;
   <a href="https://programmable.market/docs/developers">Docs</a>
   &nbsp;·&nbsp;
