@@ -26,12 +26,21 @@
 <p align="center">
   <a href="https://github.com/0xprogrammable/hookbuilder"><strong>Use the Builder</strong></a>
   &nbsp;·&nbsp;
-  <a href="https://github.com/0xprogrammable/apply">Read the review rules</a>
+  <a href="https://github.com/0xprogrammable/submit-launch">Launch review</a>
   &nbsp;·&nbsp;
   <a href="https://programmable.market/docs/developers">Documentation</a>
 </p>
 
 <br />
+
+## Choose your path
+
+| You want to | Start here |
+| --- | --- |
+| Build or test a Uniswap v4 project | [Hookbuilder](https://github.com/0xprogrammable/hookbuilder) |
+| Read the review path for one completed project | [Submit a Launch](https://github.com/0xprogrammable/submit-launch) |
+| Read the requirements for a reusable launch template | [Submit a Template](https://github.com/0xprogrammable/submit-template) |
+| Integrate Programmable launches | [Developer documentation](https://developers.programmable.market) |
 
 ## Give your coding agent one prompt
 
@@ -85,7 +94,7 @@ After I answer:
    checks, generated evidence, unresolved findings, external dependencies and the strongest truthful current status.
 
 9. Prepare an exact-revision application package only when the source is clean and revision-bound. Check the current
-   intake status at https://github.com/0xprogrammable/apply. If intake or another required gate is unavailable, stop at
+   intake status at https://github.com/0xprogrammable/submit-launch. If intake or another required gate is unavailable, stop at
    the strongest completed local state and report that boundary.
 
 10. Do not push, publish source, open or update a pull request, submit an application, sign, deploy, merge, move funds or
@@ -110,8 +119,10 @@ The public repositories are split by responsibility:
 
 - **[Programmable v4 Builder](https://github.com/0xprogrammable/hookbuilder)** turns an idea or existing repository
   into an implementation, checks and one exact application revision.
-- **[Programmable Apply](https://github.com/0xprogrammable/apply)** publishes the review rules, deterministic checker,
-  application records and discovery registry. Current intake status is published there.
+- **[Submit a Launch](https://github.com/0xprogrammable/submit-launch)** is the public review path for one completed
+  project that its creator wants to launch.
+- **[Submit a Template](https://github.com/0xprogrammable/submit-template)** defines the planned review path for a
+  reusable launch template that other creators can launch.
 - **[Programmable](https://github.com/0xprogrammable/programmable)** contains the platform contracts, website and
   Explorer.
 - **[Programmable Developers](https://github.com/0xprogrammable/developers)** defines the read-only manifest, launch
@@ -121,7 +132,7 @@ A local Builder or checker result does not approve a project or authorize a laun
 
 ## Review scope
 
-[Programmable Apply](https://github.com/0xprogrammable/apply) checks artifact identity, functionality, disclosure,
+[Submit a Launch](https://github.com/0xprogrammable/submit-launch) checks artifact identity, functionality, disclosure,
 integrity and launch compatibility for one exact public revision. A source change creates a new review target.
 
 <details>
@@ -162,7 +173,9 @@ capabilities and market state instead of inferring support from names or creator
   &nbsp;·&nbsp;
   <a href="https://github.com/0xprogrammable/hookbuilder">Builder</a>
   &nbsp;·&nbsp;
-  <a href="https://github.com/0xprogrammable/apply">Review rules</a>
+  <a href="https://github.com/0xprogrammable/submit-launch">Launch review</a>
+  &nbsp;·&nbsp;
+  <a href="https://github.com/0xprogrammable/submit-template">Template requirements</a>
   &nbsp;·&nbsp;
   <a href="https://programmable.market/docs/developers">Docs</a>
   &nbsp;·&nbsp;
