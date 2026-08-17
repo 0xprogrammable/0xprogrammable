@@ -37,6 +37,7 @@ const page = String.raw`<!doctype html>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Programmable GitHub profile preview</title>
+    <link rel="icon" href="data:," />
     <link
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/github-markdown-css@5.8.1/github-markdown.min.css"

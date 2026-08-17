@@ -1,0 +1,53 @@
+{
+  "source": "assets/profile/programmable-github-profile-night-garden-v3.png",
+  "sourceSha256": "7528c99ccffa5b3efc663cf2f8061c1e39cd189423cb80a835196b81a550d216",
+  "output": "assets/profile/programmable-github-profile-night-garden-v4.gif",
+  "outputSha256": "3046bfb5ffdb0278399003c46476cffc4f0fc5be8ea646bddd9a3b156cca1291",
+  "dimensions": [
+    1400,
+    700
+  ],
+  "frameCount": 32,
+  "frameDurationMs": 200,
+  "loopDurationMs": 6400,
+  "detectedPointStars": 102,
+  "motion": "Only detected white circular point stars in the black sky change luminance.",
+  "logoAndGarden": "Static in every frame.",
+  "chapterAssets": {
+    "builder": {
+      "source": "assets/profile/source/programmable-builder-night-garden-midjourney-v4.png",
+      "sourceSha256": "514975c3a8b01f742b690d20001e0ce20f8817a9732f2cea44d41bdf6683b9fd",
+      "midjourneyJob": "ae75b291-c01f-4b44-a0f8-b1bb7081c84a",
+      "midjourneyIndex": 2,
+      "output": "assets/profile/programmable-builder-skill-v4.jpg",
+      "outputSha256": "e1f674eea339688dfc5ac5ecf7f2b8cb17e4bb69784454d3034e267887a3bff7",
+      "dimensions": [
+        1400,
+        560
+      ]
+    },
+    "ecosystem": {
+      "source": "assets/profile/source/programmable-ecosystem-night-garden-midjourney-v4.png",
+      "sourceSha256": "ae16196b85770fdfd2009e4be7c479e44fe39df1a7985d64b5ff6b780ea28e06",
+      "midjourneyJob": "b79ea563-3261-4d5f-980e-4fb301418444",
+      "midjourneyIndex": 2,
+      "output": "assets/profile/programmable-profile-ecosystem-v4.jpg",
+      "outputSha256": "ae213d931ae334dcfd61aa6724e7e3d5898a3f6864bf40f6b8df57e49ab021bf",
+      "dimensions": [
+        1400,
+        560
+      ]
+    },
+    "socialPreview": {
+      "source": "assets/profile/programmable-github-profile-night-garden-v3.png",
+      "output": "assets/profile/programmable-github-social-preview.jpg",
+      "outputSha256": "1ee59b2455cdadca037d11057943a3d8bb8898f4b0bd7c096553a3993c7cbb85",
+      "dimensions": [
+        1280,
+        640
+      ]
+    }
+  },
+  "midjourneyMoodboard": "Programmable Night Garden",
+  "midjourneyMoodboardId": "7488121925059739690"
+}
