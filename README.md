@@ -1,22 +1,16 @@
 <p align="center">
   <a href="https://programmable.market" aria-label="Open Programmable">
-    <picture>
-      <source
-        media="(prefers-reduced-motion: reduce)"
-        srcset="./assets/profile/programmable-night-garden.jpg"
-      />
-      <img
-        src="./assets/profile/programmable-night-garden.gif"
-        alt="Programmable's Warm Ivory loop mark in the night garden"
-        width="100%"
-      />
-    </picture>
+    <img
+      src="./assets/profile/programmable-github-profile-night-garden-v3.png"
+      alt="Programmable's white loop mark above a colorful night garden beneath a black field of point stars"
+      width="100%"
+    />
   </a>
 </p>
 
 <h1 align="center">Programmable</h1>
 
-<h3 align="center">Tokens that behave how you imagine</h3>
+<h3 align="center">Shape what assets can do</h3>
 
 <p align="center">
   Describe a Uniswap v4 product in plain language. Programmable v4 Builder helps a coding agent design, implement,

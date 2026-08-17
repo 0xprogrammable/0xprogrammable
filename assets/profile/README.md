@@ -2,8 +2,12 @@
 
 These assets are the self-hosted artwork for Programmable's public GitHub profile.
 
+- `programmable-github-profile-night-garden-v3.png` is the current 1600×800 profile header. Its 2:1 floral
+  illustration was generated natively in MidJourney with the `Programmable Night Garden` moodboard, then composited
+  with the canonical white Programmable mark so the logo geometry remains exact.
 - `programmable-night-garden.gif` centers the Warm-Ivory Programmable mark in the landing page's deep-black night
-  garden while two painted plant groups sway independently and round microstars twinkle in staggered phases.
+  garden while two painted plant groups sway independently and round microstars twinkle in staggered phases. It is
+  retained as a legacy asset and is no longer used by the profile header.
 - `programmable-night-garden.jpg` is the reduced-motion fallback.
 - `programmable-builder-skill.jpg` balances the canonical Warm-Ivory Programmable mark and GitHub's official
   silhouette, rendered in the same Warm-Ivory palette, in a moonlit garden composition.
