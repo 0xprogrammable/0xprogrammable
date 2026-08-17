@@ -18,6 +18,9 @@ These assets are the self-hosted artwork for Programmable's public GitHub profil
   uses the account avatar—not this image—when someone shares the shorter personal-profile URL.
 - `programmable-github-avatar-warm-ivory-4096.png` is the pure-black 4096×4096 profile master with the Warm-Ivory
   mark sized for GitHub's circular crop.
+- `programmable-dune-analytics-night-garden-v1.gif` is the 1600×533 Dune dashboard hero. It uses the approved
+  MidJourney ecosystem source and exact white Programmable mark; only 120 round point stars change luminance over
+  the six-second loop. The adjacent JPEG is its static poster and the JSON file records its source and output hashes.
 - `source/` preserves the exact brand marks and the selected native MidJourney sources.
 
 The earlier `programmable-night-garden.*`, `programmable-builder-skill.jpg` and
@@ -27,6 +30,7 @@ The GitHub mark comes from [GitHub's official logo resources](https://github.com
 the GitHub destination.
 
 Run `python3 tools/build_profile_v4.py` from the repository root to reproduce the active rendered profile assets.
+Run `python3 tools/build_dune_brand.py` to reproduce the Dune hero, poster and manifest.
 
 The Programmable name, mark and artwork are reserved brand assets. Their presence in this public repository does not
 place them under an open-source software license.

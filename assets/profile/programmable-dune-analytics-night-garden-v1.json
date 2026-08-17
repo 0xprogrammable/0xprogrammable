@@ -1,0 +1,21 @@
+{
+  "source": "assets/profile/source/programmable-ecosystem-night-garden-midjourney-v4.png",
+  "sourceSha256": "ae16196b85770fdfd2009e4be7c479e44fe39df1a7985d64b5ff6b780ea28e06",
+  "midjourneyJob": "b79ea563-3261-4d5f-980e-4fb301418444",
+  "midjourneyIndex": 2,
+  "midjourneyMoodboardId": "7488121925059739690",
+  "output": "assets/profile/programmable-dune-analytics-night-garden-v1.gif",
+  "outputSha256": "4425dbc005b8ec02ce926ec751fae93f4078087fd261a9457f6d42553884db31",
+  "poster": "assets/profile/programmable-dune-analytics-night-garden-v1.jpg",
+  "posterSha256": "f0001e72fd83711e78d8a0154818c18a50715a1c90e3667948a60a8a365c3652",
+  "dimensions": [
+    1600,
+    533
+  ],
+  "frameCount": 20,
+  "frameDurationMs": 300,
+  "loopDurationMs": 6000,
+  "detectedPointStars": 120,
+  "motion": "Only small white circular point stars change luminance.",
+  "logoAndGarden": "Static in every frame."
+}
